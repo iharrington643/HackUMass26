@@ -96,8 +96,7 @@
 <script>
   function showError(html) { var e = document.getElementById("error"); e.innerHTML = html; e.hidden = false; }
   if (location.protocol === "file:" && !window.ONCOSPHERE_STANDALONE) {
-    showError("this page needs a web server, it won't work if you just double click it (browsers block js modules on file://). " +
-      "run <code>python3 -m http.server 8000</code> in the grid folder and go to localhost:8000/web/, or open oncosphere-standalone.html instead.");
+    showError("this page needs a web server, it won't work if you just double click it (browsers block js modules on file://). Try running this on a server and try again.");
   }
   window.addEventListener("error", function (ev) {
     var src = ev.filename ? " (" + ev.filename.split("/").slice(-2).join("/") + ":" + ev.lineno + ")" : "";
