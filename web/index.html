@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>oncosphere</title>
+<script type="importmap">
+{ "imports": { "three": "./vendor/three.module.js", "three/addons/": "./vendor/" } }
+</script>
+<style>
+  #view { width: 720px; height: 540px; display: block; border: 1px solid #999; }
+  td { vertical-align: top; padding-right: 16px; }
+  #led-preview { width: 300px; background: black; }
+</style>
+</head>
+<body>
+
+<h2>oncosphere</h2>
+<p>3d tumor growth + treatment resistance sim. hackumass 2026</p>
+
+<p id="error" style="color: red" hidden></p>
+
+<table>
+<tr>
+<td>
+  <canvas id="view" tabindex="0"></canvas>
+  <p>
+    drag to rotate, scroll to zoom, right drag to pan<br>
+    blue = sensitive, orange = resistant, purple = persister, gray = dormant, yellow = hit by radiation, dark = dead
+  </p>
+</td>
+<td>
+  <b id="day">day 0</b>
+  <p id="counts"></p>
+
+  <p>
+    cancer:<br>
+    <select id="cancer"></select>
+  </p>
+  <p>
+    <button id="play">Pause</button>
+    <button id="reset">New tumor</button>
+  </p>
+  <p>
+    speed:<br>
+    <input id="speed" type="range" min="0" max="6" step="1" value="1">
+  </p>
+  <p>
+    treatment:<br>
+    <select id="regimen"></select><br>
+    <button id="treat">Start treatment</button>
+  </p>
+  <p id="prediction"></p>
+
+  <hr>
+  <p>
+    color by:
+    <select id="color"><option value="resistance">resistance</option><option value="clones">clone</option></select><br>
+    <label><input id="cut" type="checkbox"> cutaway</label><br>
+    <label><input id="dead" type="checkbox" checked> show dead cells</label><br>
+    <label><input id="rotate" type="checkbox" checked> auto rotate</label><br>
+    <button id="recenter">reset camera</button>
+  </p>
+
+  <hr>
+  <div id="leds">
+    <b>led panels</b>
+    <p>
+      <button id="led-connect">Connect LEDs</button><br>
+      <span id="led-status">plug in the arduino then hit connect</span>
+    </p>
+    <canvas id="led-preview" width="300" height="80"></canvas>
+    <div id="led-fps"></div>
+    <p>
+      show: <select id="led-mode"><option value="auto">auto</option><option value="slices">slices</option><option value="view+slice">front view + slices</option></select><br>
+      zoom: <select id="led-zoom"><option value="fit">fit tumor</option><option value="grow">watch it grow</option></select><br>
+      brightness: <input id="led-bright" type="range" min="0.1" max="1" step="0.05">
+    </p>
+    <details>
+      <summary>panel setup</summary>
+      <p>
+        panels: <select id="led-panels"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><br>
+        rotate: <select id="led-rotate"><option value="0">0</option><option value="90">90</option><option value="180">180</option><option value="270">270</option></select><br>
+        <label><input id="led-serp" type="checkbox"> zigzag rows</label><br>
+        <label><input id="led-cols" type="checkbox"> chain goes down columns</label><br>
+        <label><input id="led-fx" type="checkbox"> flip left/right</label><br>
+        <label><input id="led-fy" type="checkbox"> flip up/down</label><br>
+        <label><input id="led-test" type="checkbox"> test pattern</label>
+      </p>
+      <p>test pattern: top left led red, top row green, left column blue, panel 1 has 1 white dot, panel 2 has 2, etc. change settings until the real panels look like the preview.</p>
+    </details>
+  </div>
+</td>
+</tr>
+</table>
+
+<script>
+  function showError(html) { var e = document.getElementById("error"); e.innerHTML = html; e.hidden = false; }
+  if (location.protocol === "file:" && !window.ONCOSPHERE_STANDALONE) {
+    showError("this page needs a web server, it won't work if you just double click it (browsers block js modules on file://). " +
+      "run <code>python3 -m http.server 8000</code> in the grid folder and go to localhost:8000/web/, or open oncosphere-standalone.html instead.");
+  }
+  window.addEventListener("error", function (ev) {
+    var src = ev.filename ? " (" + ev.filename.split("/").slice(-2).join("/") + ":" + ev.lineno + ")" : "";
+    showError("error: " + ev.message + src + ". if a file failed to load, make sure the whole grid folder is there and you're using a server.");
+  });
+  setTimeout(function () {
+    if (!document.body.dataset.ready && document.getElementById("error").hidden)
+      showError("app didn't start after 15 seconds, check the console (F12).");
+  }, 15000);
+</script>
+<script type="module" src="./app.js"></script>
+</body>
+</html>
