@@ -1,4 +1,4 @@
-// drugs.js - drug levels in the blood + how far each drug gets into the tumor
+// drug levels in the blood + how far each drug gets into the tumor
 //
 // two parts:
 //  1. plasma (blood) level over time for each drug. 1 = peak right after one standard dose
@@ -11,10 +11,10 @@
 //     and just multiply by the plasma level:   C(x, t) = plasma(t) * field_L(x)
 //     drugs w/ the same penetration length share a field, so 6 drugs might only need 3-4 fields
 //
-// !!!! EVERY number in DRUG_CATALOG below is a DUMMY placeholder (marked "// DUMMY") until Rayne
+// !!!! EVERY number in DRUG_CATALOG below is a DUMMY placeholder until Rayne
 // !!!! fills in the real ones (task 5). run dummyReport() to see what's still fake
 //
-// drug KILLING (dose-response curves, persisters) is task 8 - it'll call concentrationAt()
+// without further ado, i am so incredibly tired: drug KILLING (dose-response curves, persisters)
 
 import { DiffusionField } from "./diffusion.js";
 import { TRAIT } from "./cells.js";
@@ -34,12 +34,26 @@ import { TRAIT } from "./cells.js";
 //   resistFold        : how many times higher EC50 gets for resistant cells (task 8)
 // ---------------------------------------------------------------------------------------------
 export const DRUG_CATALOG = {
+  carboplatin: {
+    name: "Carboplatin", kind: "chemo",
+    penetrationLength: 5,     // (OVERRIDDEN by DIFFUSION_PARAMS below -> 40 cells from D_eff + k) old ESTIMATE: no measured distance found? At least Rayne and I couldn't find one. cisplatin (same family) gets all the way into the core of spheroids (Zhang et al. 2012, Metallomics), but carboplatin penetrated big cell clumps poorly in a Dartmouth PDT + carboplatin study, so we went fairly deep but not all the way
+    halfLifeH: 1.5,           // RAYNE: 1.1-2 h, took the middle
+    mode: "bolus",            // SOURCED: 15-60 min IV infusion, short enough to count as a bolus at 4-hr steps
+    infusionH: 0,             // not used (bolus)
+    killRate: 1.8,            // DUMMY
+    ec50: 0.22,               // DUMMY
+    hill: 2,                  // DUMMY
+    quiescentFactor: 0.4,     // DUMMY (platinum crosslinks DNA, so it hurts resting cells some too)
+    effluxSubstrate: false,   // DUMMY
+    resistTrait: TRAIT.RCH,   // DUMMY
+    resistFold: 6,            // DUMMY
+  },
   doxorubicin: {
     name: "Doxorubicin", kind: "chemo",
-    penetrationLength: 2,     // DUMMY
-    halfLifeH: 30,            // DUMMY
-    mode: "bolus",            // DUMMY
-    infusionH: 0,             // DUMMY
+    penetrationLength: 3.2,   // SOURCED: drops to half at 40-50 um from vessels (Primeau et al. 2005) -> 45/ln2/20 = 3.2 cells
+    halfLifeH: 30,            // RAYNE: 30 h (also matches the 17-48 h terminal half-life range)
+    mode: "bolus",            // SOURCED: given as an IV push / short infusion
+    infusionH: 0,             // not used (bolus)
     killRate: 1.5,            // DUMMY
     ec50: 0.2,                // DUMMY
     hill: 2,                  // DUMMY
@@ -50,73 +64,71 @@ export const DRUG_CATALOG = {
   },
   paclitaxel: {
     name: "Paclitaxel", kind: "chemo",
-    penetrationLength: 4,     // DUMMY
-    halfLifeH: 20,            // DUMMY
-    mode: "bolus",            // DUMMY
-    infusionH: 0,             // DUMMY
+    penetrationLength: 2,     // SOURCE-ish: "little drug reaching further than 100 um" from vessels in tumors (Kyle et al. 2007, Clin Cancer Res). if ~10% is left at 100 um: L = 100/ln(10)/20 = 2.2 cells, rounded to 2
+    halfLifeH: 20,            // RAYNE: 13-27 h, took the middle
+    mode: "bolus",            // SOURCED-ish: 1-3 hr infusion, close enough to a bolus at 4-hr steps
+    infusionH: 0,             // not used (bolus)
     killRate: 2.0,            // DUMMY
     ec50: 0.15,               // DUMMY
     hill: 2,                  // DUMMY
-    quiescentFactor: 0,       // DUMMY
+    quiescentFactor: 0,       // DUMMY (taxanes mainly hit dividing cells, so we picked 0)
     effluxSubstrate: true,    // DUMMY
     resistTrait: TRAIT.RCH,   // DUMMY
     resistFold: 6,            // DUMMY
   },
-  cisplatin: {
-    name: "Cisplatin", kind: "chemo",
-    penetrationLength: 6,     // DUMMY
-    halfLifeH: 10,            // DUMMY
-    mode: "bolus",            // DUMMY
-    infusionH: 0,             // DUMMY
-    killRate: 1.8,            // DUMMY
-    ec50: 0.22,               // DUMMY
-    hill: 2,                  // DUMMY
-    quiescentFactor: 0.4,     // DUMMY
-    effluxSubstrate: false,   // DUMMY
-    resistTrait: TRAIT.RCH,   // DUMMY
-    resistFold: 6,            // DUMMY
-  },
-  fluorouracil: {
-    name: "5-Fluorouracil", kind: "chemo",
-    penetrationLength: 8,     // DUMMY (small molecule)
-    halfLifeH: 0.5,           // DUMMY
-    mode: "infusion",         // DUMMY
-    infusionH: 46,            // DUMMY
-    killRate: 1.8,            // DUMMY
+  goserelin: {
+    // hormone therapy: it doesn't poison cells, it shuts off testosterone/estrogen so hormone-dependent
+    // cells stop growing + die off. we model that as a slow, steady kill rate. only matters for
+    // hormone-sensitive cancers (see cancers.js). "resistance" = the tumor learns to grow without hormone
+    // (castration-resistant prostate cancer) -> we reuse the RTA trait for that
+    name: "Goserelin (Zoladex implant)", kind: "hormone",
+    penetrationLength: 10,    // ESTIMATE: it works through hormone levels in the whole body, not by soaking into the tumor, so we let it reach everywhere
+    halfLifeH: 3.2,           // RAYNE: 2.3-4.2 h, took the middle (this is how fast it clears AFTER the implant runs out)
+    mode: "infusion",         // SOURCED: it's a slow-release implant under the skin, so it acts like a month-long infusion
+    infusionH: 672,           // SOURCED: the 3.6 mg implant is replaced every 28 days (28 x 24 h)
+    killRate: 0.25,           // DUMMY (slow on purpose, hormone therapy shrinks tumors over months)
     ec50: 0.2,                // DUMMY
     hill: 2,                  // DUMMY
-    quiescentFactor: 0.05,    // DUMMY
+    quiescentFactor: 0.6,     // DUMMY
     effluxSubstrate: false,   // DUMMY
-    resistTrait: TRAIT.RCH,   // DUMMY
-    resistFold: 6,            // DUMMY
+    resistFold: 25,           // DUMMY
   },
-  targetedTKI: {
-    name: "Targeted pill (generic TKI)", kind: "targeted",
-    penetrationLength: 6,     // DUMMY
-    halfLifeH: 48,            // DUMMY
-    mode: "continuous",       // DUMMY
-    infusionH: 0,             // DUMMY
-    killRate: 0.5,            // DUMMY
+  trastuzumabDeruxtecan: {
+    // antibody-drug conjugate (Enhertu): antibody finds HER2 cells, then releases a topo-I chemo payload.
+    // only works if the cancer actually has HER2 (see cancers.js). losing HER2 = RTA trait
+    name: "Trastuzumab deruxtecan (Enhertu)", kind: "targeted",
+    penetrationLength: 3,     // ESTIMATE: the antibody only reaches "several cell layers" from capillaries (Thurber et al. 2008) and stays right on the HER2 cells near vessels (2021 Clin Cancer Res imaging study)
+    payloadPenetrationLength: 5.5, // ESTIMATE: the released chemo payload (DXd) leaks into neighbors the antibody never reached (same 2021 imaging study). other ADC payloads reached ~125 um vs ~75 um for the antibody-hit cells (Khera et al. 2022) -> ~1.7x deeper
+    bystander: 0.5,           // DUMMY 
+    halfLifeH: 139,           // RAYNE: 5.8 days x 24
+    mode: "bolus",            // 30-90 min IV infusion every 3 weeks
+    infusionH: 0,             // not used (bolus)
+    killRate: 1.2,            // DUMMY
     ec50: 0.15,               // DUMMY
     hill: 2,                  // DUMMY
-    quiescentFactor: 0.5,     // DUMMY
+    quiescentFactor: 0.2,     // DUMMY (topo-I payload mostly hits dividing cells)
     effluxSubstrate: true,    // DUMMY
     resistTrait: TRAIT.RTA,   // DUMMY
     resistFold: 25,           // DUMMY
   },
-  targetedAntibody: {
-    name: "Targeted antibody (generic)", kind: "targeted",
-    penetrationLength: 2,     // DUMMY (big molecule)
-    halfLifeH: 400,           // DUMMY
-    mode: "continuous",       // DUMMY
-    infusionH: 0,             // DUMMY
-    killRate: 0.4,            // DUMMY
-    ec50: 0.15,               // DUMMY
+  porfimer: {
+    // photodynamic therapy (Photofrin): the drug does nothing by itself. ~2 days after the shot a laser
+    // is shone on the tumor and the drug makes toxic singlet oxygen right there. so it needs light AND oxygen
+    name: "Porfimer sodium (Photofrin) + laser", kind: "photodynamic",
+    penetrationLength: 2.5,   // ESTIMATE: Photofrin mostly sticks near blood vessels (Korbelik & Krosl 1994, Br J Cancer; 2012 Cancer Res vascular study). similar photosensitizers convert to L = 2.3 (mTHPC, 5x lower at 75 um) to 5.4 cells (NPe6, 2x lower at 75 um), and Photofrin's on the vessel-hugging end
+    halfLifeH: 408,           // RAYNE: 12.7-21.3 days, took ~17 days (x 24)
+    mode: "bolus",            // SOURCED: single IV injection
+    infusionH: 0,             // not used (bolus)
+    killRate: 12,             // DUMMY (while the laser is on - PDT kills a lot in one go)
+    ec50: 0.2,                // DUMMY
     hill: 2,                  // DUMMY
-    quiescentFactor: 0.5,     // DUMMY
+    quiescentFactor: 1,       // DUMMY (singlet oxygen kills resting cells just as well)
     effluxSubstrate: false,   // DUMMY
-    resistTrait: TRAIT.RTA,   // DUMMY
-    resistFold: 25,           // DUMMY
+    resistTrait: TRAIT.RCH,   // DUMMY
+    resistFold: 3,            // DUMMY
+    needsLight: true,         // how PDT works (not a dummy)
+    needsOxygen: true,        // how PDT works (not a dummy)
+    oxygenK: 0.1,             // DUMMY - kill is half-max at this oxygen level (1 = right by the vessels)
   },
 };
 
@@ -124,7 +136,7 @@ export const DUMMY_FIELDS = Object.fromEntries(
   Object.entries(DRUG_CATALOG).map(([id, d]) => [id, Object.keys(d).filter((k) => k !== "name" && k !== "kind")])
 );
 
-/** report for dummies. just kidding it's just for finding any dummy fields left behind */
+/** report for dummies. just kidding it's just for finding any dummy fields left behind in my edits & reformatting*/
 export function dummyReport() {
   const lines = [];
   for (const [id, fields] of Object.entries(DUMMY_FIELDS)) if (fields.length) lines.push(`${id}: ${fields.join(", ")}`);
@@ -151,7 +163,7 @@ export class DrugFields {
     this.opts = { ...DRUG_FIELD_DEFAULTS, ...opts };
     this.catalog = catalog;
     this.ids = Object.keys(catalog);
-    this.plasma = {};        // drug id -> blood level (1 = peak after one standard dose)
+    this.plasma = {};        // 1 = peak after one standard dose
     this.infusionLeft = {};  // drug id -> hours of infusion left
     this.infusionLevel = {}; // drug id -> level held during infusion
     this.continuousOn = {};  // drug id -> target level while on (0 = off)
@@ -177,7 +189,7 @@ export class DrugFields {
   get fieldCount() { return this.fields.size; }
 
   // dosing
-  /** bolus drugs jump up, infusion drugs start their pump */
+  /** bolus */
   giveDose(id, amount = 1) {
     const d = this.catalog[id];
     if (!d) throw new Error(`unknown drug ${id}`);
@@ -192,7 +204,8 @@ export class DrugFields {
     this.activate(id);
   }
 
-  /** turn a daily pill / maintenance drug on (level > 0) or off (0) */
+  /** turn a daily pill / maintenance drug on (level > 0) or off (0)
+   Not really a concern for right now but still not like removing it because eventually it might be helpful?*/
   setContinuous(id, level = 1) {
     this.continuousOn[id] = level;
     if (level > 0) this.activate(id);
@@ -211,7 +224,7 @@ export class DrugFields {
     return p > 0 ? p * this.fields.get(this.groupOf[id]).field.F[i] : 0;
   }
 
-  /** the normalized field (vessel = 1) a drug uses, which we can use later for coloring the 3D view */
+  /** the normalized field (vessel = 1) a drug uses, which we can use later for coloring the 3D view?? */
   fieldFor(id) { return this.fields.get(this.groupOf[id]).field; }
 
   /** drugs currently in the blood above activeLevel */
