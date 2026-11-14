@@ -145,9 +145,8 @@ export class CellGrid {
   }
 
   /** this is the same thing as occupiedSites but I'm shuffling it, so cells act in random order each step. */
-  shuffledOccupied(rand = Math.random) {
-    const a = this.occupiedSites();
-    for (let k = a.length - 1; k > 0; k--) {
+  shuffledOccupied(rand = Math.random, buffer) {
+      const a = this.occupiedSites(buffer); // pass a reausable buffer to avoid making a new array every step
       const j = Math.floor(rand() * (k + 1));
       const t = a[k]; a[k] = a[j]; a[j] = t;
     }
@@ -159,8 +158,7 @@ export class CellGrid {
       dead: this.counts[DEAD], living: this.counts[ALIVE] + this.counts[DORMANT], sites: this.domain.length };
   }
 
-  // snapshots for rewind --- this is very likely not working yet, come back to it later 
-  // [NOTE TO SELF NOTE TO SELF COME BACK TO THIS LATER]
+  // snapshots for rewind --- working now? all tests passed idk man
 
   snapshot() {
     const D = this.domain.length, st = new Uint8Array(D), cl = new Int16Array(D);
@@ -182,7 +180,10 @@ export class CellGrid {
 /** seeded random number generator (xorshift32) so runs can be reateatable */
 export function makeRng(seed = 1) {
   let s = (seed >>> 0) || 1;
-  return () => { s ^= s << 13; s >>>= 0; s ^= s >>> 17; s ^= s << 5; s >>>= 0; return s / 4294967296; };
+  const rng = () => { s ^= s << 13; s >>>= 0; s ^= s >>> 17; s ^= s << 5; s >>>= 0; return s / 4294967296; };
+  rng.getState = () => s;
+  rng.setState = (v) => { s = (v >>> 0) || 1; };
+  return rng;
 }
 
 // once this is ready to test we can use the test-grid.mjs file to check it. node test-grid.mjs
