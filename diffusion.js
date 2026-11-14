@@ -161,6 +161,6 @@ export function createOxygenField(grid, opts = {}) {
   return new DiffusionField(grid, { penetrationLength: 3, boundaryValue: 1, dormantUptake: 0.5, deadUptake: 0, ...opts });
 }
 
-// oxygen cutoffs the cell rules use (1 = vessel level, which is ~100 mm Hg)
+// oxygen cutoffs the cell rules use (1 = level right by the capillaries, ~40 mm Hg in a real tumor)
 export const O2_QUIESCENT = 0.25; // under this cells stop dividing (go DORMANT)
 export const O2_NECROTIC = 0.05;  // under this cells die (go DEAD)
