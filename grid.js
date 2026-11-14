@@ -147,10 +147,11 @@ export class CellGrid {
   /** this is the same thing as occupiedSites but I'm shuffling it, so cells act in random order each step. */
   shuffledOccupied(rand = Math.random, buffer) {
       const a = this.occupiedSites(buffer); // pass a reausable buffer to avoid making a new array every step
-      const j = Math.floor(rand() * (k + 1));
-      const t = a[k]; a[k] = a[j]; a[j] = t;
-    }
-    return a;
+      for (let k = a.length - 1; k > 0; k--) {
+        const j = Math.floor(rand() * (k + 1));
+        const t = a[k]; a[k] = a[j]; a[j] = t;
+      }
+      return a;
   }
 
   summary() {
