@@ -1,112 +1,438 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<meta charset="utf-8">
-<title>oncosphere</title>
-<script type="importmap">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OncoSphere - 3D Tumor Simulation</title>
+    <script type="importmap">
 { "imports": { "three": "./vendor/three.module.js", "three/addons/": "./vendor/" } }
 </script>
-<style>
-  #view { width: 720px; height: 540px; display: block; border: 1px solid #999; }
-  td { vertical-align: top; padding-right: 16px; }
-  #led-preview { width: 300px; background: black; }
-</style>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+
+    <!--
+
+Tooplate 2145 Eco Lume
+
+https://www.tooplate.com/view/2145-eco-lume
+
+Free HTML CSS Template
+
+-->
 </head>
+
 <body>
+    <!-- Background Elements -->
+    <div class="bio-bg"></div>
+    <div class="organic-shapes">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+    <div class="particle-system" id="particleSystem"></div>
 
-<h2>oncosphere</h2>
-<p>3d tumor growth + treatment resistance sim. hackumass 2026</p>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="logo">
+                <div class="logo-icon"></div>
+                <span class="logo-text">OncoSphere</span>
+            </a>
+            <!--<ul class="nav-menu" id="navMenu">-->
+            <!--    <li><a href="#home" class="nav-link active">Home</a></li>-->
+            <!--    <li><a href="#about" class="nav-link">About Us</a></li>-->
+            <!--    <li><a href="#features" class="nav-link">How to Use</a></li>-->
+            <!--</ul>-->
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
 
-<p id="error" style="color: red" hidden></p>
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Welcome to OncoSphere!</h1>
+                <p>Visualize tumor growth, mutation, and treatment resistance with our 3D tumor simulation.</p>
+                <div class="hero-buttons">
+                    <a href="#features" class="btn btn-primary">
+                        ℹ️ About Us
+                    </a>
+                    <a href="#about" class="btn btn-secondary">
+                        📖 How to Use
+                    </a>
+                </div>
+            </div>
+            <!--<div class="hero-visual">-->
+            <!--    <div class="bio-sphere">-->
+            <!--        <div class="rotating-text">-->
+            <!--            <div class="text-circle active">BIO • TECH</div>-->
+            <!--            <div class="text-circle">ECO • FUTURE</div>-->
+            <!--            <div class="text-circle">GREEN • INNOVATION</div>-->
+            <!--        </div>-->
+            <!--    </div>-->
+            <!--</div>-->
+        </div>
+    </section>
 
-<table>
-<tr>
-<td>
-  <canvas id="view" tabindex="0"></canvas>
-  <p>
-    drag to rotate, scroll to zoom, right drag to pan<br>
-    blue = sensitive, orange = resistant, purple = persister, gray = dormant, yellow = hit by radiation, dark = dead
-  </p>
-</td>
-<td>
-  <b id="day">day 0</b>
-  <p id="counts"></p>
+    <!-- Stats Section -->
+    <!--<section class="stats">-->
+    <!--    <div class="stats-container">-->
+    <!--        <div class="stat-item">-->
+    <!--            <h3>98%</h3>-->
+    <!--            <p>Energy Efficiency</p>-->
+    <!--        </div>-->
+    <!--        <div class="stat-item">-->
+    <!--            <h3>2.5M+</h3>-->
+    <!--            <p>Carbon Tons Saved</p>-->
+    <!--        </div>-->
+    <!--        <div class="stat-item">-->
+    <!--            <h3>150+</h3>-->
+    <!--            <p>Partner Companies</p>-->
+    <!--        </div>-->
+    <!--        <div class="stat-item">-->
+    <!--            <h3>24/7</h3>-->
+    <!--            <p>Ecosystem Monitoring</p>-->
+    <!--        </div>-->
+    <!--    </div>-->
+    <!--</section>-->
 
-  <p>
-    cancer:<br>
-    <select id="cancer"></select>
-  </p>
-  <p>
-    <button id="play">Pause</button>
-    <button id="reset">New tumor</button>
-  </p>
-  <p>
-    speed:<br>
-    <input id="speed" type="range" min="0" max="6" step="1" value="1">
-  </p>
-  <p>
-    treatment:<br>
-    <select id="regimen"></select><br>
-    <button id="treat">Start treatment</button>
-  </p>
-  <p id="prediction"></p>
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <h2 class="section-title">OncoSphere's 3D Tumor Vision Tool</h2>
+        <div class="features-showcase">
+            <table class="simulation-table">
+                <!-- Top row: Tumor visualization -->
+                <tr>
+                    <td colspan="6" class="view-cell">
+                        <canvas id="view" tabindex="0"></canvas>
+                    </td>
+                </tr>
 
-  <hr>
-  <p>
-    color by:
-    <select id="color"><option value="resistance">resistance</option><option value="clones">clone</option></select><br>
-    <label><input id="cut" type="checkbox"> cutaway</label><br>
-    <label><input id="dead" type="checkbox" checked> show dead cells</label><br>
-    <label><input id="rotate" type="checkbox" checked> auto rotate</label><br>
-    <button id="recenter">reset camera</button>
-  </p>
+                <!-- Bottom row: Controls -->
+                <tr class="controls-row">
+                    <td>
+                        <b id="day">Day 0</b>
+                        <p id="counts"></p>
+                        Cancer Type:
+                        <select id="cancer"></select>
+                        <button id="play" class="btn btn-secondary">Play/Pause</button>
+                        <button id="reset" class="btn btn-secondary">New Tumor</button>
+                        Speed:
+                        <input id="speed" type="range" min="0" max="6" step="1" value="1">
+                    </td>
 
-  <hr>
-  <div id="leds">
-    <b>led panels</b>
-    <p>
-      <button id="led-connect">Connect LEDs</button><br>
-      <span id="led-status">plug in the arduino then hit connect</span>
-    </p>
-    <canvas id="led-preview" width="300" height="80"></canvas>
-    <div id="led-fps"></div>
-    <p>
-      show: <select id="led-mode"><option value="auto">auto</option><option value="slices">slices</option><option value="view+slice">front view + slices</option></select><br>
-      zoom: <select id="led-zoom"><option value="fit">fit tumor</option><option value="grow">watch it grow</option></select><br>
-      brightness: <input id="led-bright" type="range" min="0.1" max="1" step="0.05">
-    </p>
-    <details>
-      <summary>panel setup</summary>
-      <p>
-        panels: <select id="led-panels"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select><br>
-        rotate: <select id="led-rotate"><option value="0">0</option><option value="90">90</option><option value="180">180</option><option value="270">270</option></select><br>
-        <label><input id="led-serp" type="checkbox"> zigzag rows</label><br>
-        <label><input id="led-cols" type="checkbox"> chain goes down columns</label><br>
-        <label><input id="led-fx" type="checkbox"> flip left/right</label><br>
-        <label><input id="led-fy" type="checkbox"> flip up/down</label><br>
-        <label><input id="led-test" type="checkbox"> test pattern</label>
-      </p>
-      <p>test pattern: top left led red, top row green, left column blue, panel 1 has 1 white dot, panel 2 has 2, etc. change settings until the real panels look like the preview.</p>
-    </details>
-  </div>
-</td>
-</tr>
-</table>
+                    <td>
+                        Treatment Type:
+                        <select id="regimen"></select>
+                        <button id="treat" class="btn btn-secondary">Begin Treatment</button>
+                        <p id="prediction"></p>
+                    </td>
 
-<script>
-  function showError(html) { var e = document.getElementById("error"); e.innerHTML = html; e.hidden = false; }
-  if (location.protocol === "file:" && !window.ONCOSPHERE_STANDALONE) {
-    showError("this page needs a web server, it won't work if you just double click it (browsers block js modules on file://). Try running this on a server and try again.");
-  }
-  window.addEventListener("error", function (ev) {
-    var src = ev.filename ? " (" + ev.filename.split("/").slice(-2).join("/") + ":" + ev.lineno + ")" : "";
-    showError("error: " + ev.message + src + ". if a file failed to load, make sure the whole grid folder is there and you're using a server.");
-  });
-  setTimeout(function () {
-    if (!document.body.dataset.ready && document.getElementById("error").hidden)
-      showError("app didn't start after 15 seconds, check the console (F12).");
-  }, 15000);
-</script>
-<script type="module" src="./app.js"></script>
+                    <td>
+                        Color By:
+                        <select id="color">
+                            <option value="resistance">Resistance</option>
+                            <option value="clones">Clone</option>
+                        </select>
+                        <br>
+                        <label><input id="cut" type="checkbox"> Cutaway</label>
+                        <br>
+                        <label><input id="dead" type="checkbox" checked> Show Dead Cells</label>
+                        <br>
+                        <label><input id="rotate" type="checkbox" checked> Auto Rotate</label>
+                        <br>
+                        <button id="recenter">Reset Camera</button>
+                    </td>
+
+                    <td>
+                        <div id="leds">
+                            <b>LED Panels</b>
+                            <p>
+                                <button id="led-connect" class="btn btn-secondary">Connect LEDs</button>
+                                <br>
+                                <span id="led-status">Plug in Arduino, Hit Connect</span>
+                            </p>
+                            <canvas id="led-preview" width="300" height="80"></canvas>
+                            <div id="led-fps"></div>
+                            <details>
+                                <summary>Panel Setup</summary>
+                                <p>
+                                    Panels: <select id="led-panels">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                    </select><br>
+                                    Rotate: <select id="led-rotate">
+                                        <option value="0">0</option>
+                                        <option value="90">90</option>
+                                        <option value="180">180</option>
+                                        <option value="270">270</option>
+                                    </select><br>
+                                    <label><input id="led-serp" type="checkbox"> Zigzag Rows</label><br>
+                                    <label><input id="led-cols" type="checkbox"> Chain Goes Down Columns</label><br>
+                                    <label><input id="led-fx" type="checkbox"> Flip Left/Right</label><br>
+                                    <label><input id="led-fy" type="checkbox"> Flip Up/Down</label><br>
+                                    <label><input id="led-test" type="checkbox"> Test Pattern</label>
+                                </p>
+                                <p>Test Pattern: Top left led red, top row green, left column blue, panel 1 has 1 white
+                                    dot, panel 2 has 2, etc. Change settings until the real panels look like the
+                                    preview.</p>
+                            </details>
+                        </div>
+                    </td>
+
+                    <td>
+                        <p>
+                            Show: <select id="led-mode">
+                                <option value="auto">Auto</option>
+                                <option value="slices">Slices</option>
+                                <option value="view+slice">Front View + Slices</option>
+                            </select>
+                            <br>
+                            Zoom: <select id="led-zoom">
+                                <option value="fit">Fit Tumor</option>
+                                <option value="grow">Watch it grow</option>
+                            </select>
+                            <br>
+                            Brightness: <input id="led-bright" type="range" min="0.1" max="1" step="0.05">
+                        </p>
+                    </td>
+                </tr>
+            </table>
+
+
+            <div class="feature-navigation">
+                <div class="nav-item active" data-feature="ecosystems">
+                    <!--<div class="nav-item-icon">🌿</div>-->
+                    <div class="nav-item-content">
+                        <h4>Controls</h4>
+                        <p>Drag to Rotate - Scroll to Zoom - Drag Right to Pan</p>
+                    </div>
+                </div>
+                <div class="nav-item" data-feature="circular">
+                    <div class="nav-item-icon">🔵️</div>
+                    <div class="nav-item-content">
+                        <h4>Blue</h4>
+                        <p>Sensitive</p>
+                    </div>
+                </div>
+                <div class="nav-item" data-feature="bioenergy">
+                    <div class="nav-item-icon">🟠</div>
+                    <div class="nav-item-content">
+                        <h4>Orange</h4>
+                        <p>Resistant</p>
+                    </div>
+                </div>
+                <div class="nav-item" data-feature="networks">
+                    <div class="nav-item-icon">🟣</div>
+                    <div class="nav-item-content">
+                        <h4>Purple</h4>
+                        <p>Persister</p>
+                    </div>
+                </div>
+                <div class="nav-item" data-feature="architecture">
+                    <div class="nav-item-icon">⚪</div>
+                    <div class="nav-item-content">
+                        <h4>Gray</h4>
+                        <p>Dormant</p>
+                    </div>
+                </div>
+                <div class="nav-item" data-feature="symbiosis">
+                    <div class="nav-item-icon">🟡</div>
+                    <div class="nav-item-content">
+                        <h4>Yellow</h4>
+                        <p>Hit By Radition</p>
+                    </div>
+                </div>
+                <div class="nav-item" data-feature="symbiosis">
+                    <div class="nav-item-icon">⚫️</div>
+                    <div class="nav-item-content">
+                        <h4>Dark</h4>
+                        <p>Dead</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <h2 class="section-title">About OncoSphere</h2>
+
+        <!-- First Row: Animation Left, Text Right -->
+        <!--<div class="about-content">-->
+        <!--    <div class="about-visual">-->
+        <!--        <div class="eco-visualization">-->
+        <!--            <div class="growth-rings">-->
+        <!--                <div class="ring"></div>-->
+        <!--                <div class="ring"></div>-->
+        <!--                <div class="ring"></div>-->
+        <!--            </div>-->
+        <!--        </div>-->
+        <!--    </div>-->
+        <!--    <div class="about-text">-->
+        <!--        <h2>Growing Tomorrow's Solutions</h2>-->
+        <!--        <p>EcoLume represents a paradigm shift in how we approach technology. By studying nature's 3.8 billion years of R&D, we've developed solutions that are not just sustainable, but regenerative.</p>-->
+        <!--        <p>Our bio-inspired systems don't just minimize environmental impact—they actively contribute to ecological restoration while delivering unprecedented performance and efficiency.</p>-->
+        <!--        <p>From neural networks inspired by mycelial connections to energy systems that mimic photosynthesis, we're building a future where technology and nature work in perfect harmony. Get organized and stay on track with <a href="https://timermo.com" rel="nofollow" target="_blank">TimerMo</a> today. Browse thousands of stunning vector stickers at <a href="https://www.vectorsticker.com" rel="nofollow" target="_blank">VectorSticker</a> to enhance your designs.</p>-->
+        <!--    </div>-->
+        <!--</div>-->
+
+        <!-- Second Row: Text Left, Animation Right -->
+        <div class="about-content">
+            <div class="about-text">
+                <h2>Innovation Through Biomimicry</h2>
+                <p>Our breakthrough approach combines cutting-edge biotechnology with advanced AI to create solutions
+                    that evolve and adapt like living organisms. Each system learns, grows, and improves over time.</p>
+                <p>We've pioneered revolutionary techniques in molecular computing, self-healing materials, and
+                    distributed intelligence networks that mirror the resilience and efficiency found in natural
+                    ecosystems.</p>
+                <p>Join us in redefining what's possible when human ingenuity meets nature's wisdom. Together, we're not
+                    just building technology—we're cultivating a sustainable future for generations to come.</p>
+            </div>
+            <div class="about-visual">
+                <div class="network-visualization">
+                    <div class="network-node"></div>
+                    <div class="network-node"></div>
+                    <div class="network-node"></div>
+                    <div class="network-node"></div>
+                    <div class="network-node"></div>
+                    <div class="network-connection connection-1"></div>
+                    <div class="network-connection connection-2"></div>
+                    <div class="network-connection connection-3"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="contact-container">
+            <div class="contact-form">
+                <h2 class="section-title" style="text-align: left; margin-bottom: 40px; font-size: 2.5rem;">Let's Grow
+                    Together</h2>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="company">Company</label>
+                        <input type="text" id="company" name="company">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" placeholder="Tell us about your sustainability goals..."
+                            required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">🌱 Send Message</button>
+                </form>
+            </div>
+            <div class="contact-info">
+                <h3>Connect With Nature</h3>
+                <div class="contact-item">
+                    <div class="contact-icon">📧</div>
+                    <div class="contact-details">
+                        <h4>Email</h4>
+                        <p>hello@ecolume.earth</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">📱</div>
+                    <div class="contact-details">
+                        <h4>Phone</h4>
+                        <p>+1 (555) ECO-TECH</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">🌍</div>
+                    <div class="contact-details">
+                        <h4>Location</h4>
+                        <p>Green Valley, CA 94043</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">⏰</div>
+                    <div class="contact-details">
+                        <h4>Support</h4>
+                        <p>24/7 Global Coverage</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>OncoSphere</h3>
+                <p>Leading the bio-tech revolution with sustainable, nature-inspired solutions for a regenerative
+                    future.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link">📘</a>
+                    <a href="#" class="social-link">🐦</a>
+                    <a href="#" class="social-link">💼</a>
+                    <a href="#" class="social-link">📸</a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Solutions</h4>
+                <ul>
+                    <li><a href="#">Smart Ecosystems</a></li>
+                    <li><a href="#">Bio Energy</a></li>
+                    <li><a href="#">Circular Systems</a></li>
+                    <li><a href="#">Global Network</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="#">Documentation</a></li>
+                    <li><a href="#">Case Studies</a></li>
+                    <li><a href="#">Research Papers</a></li>
+                    <li><a href="#">API Reference</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press Kit</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+    <script>
+        function showError(html) { var e = document.getElementById("error"); e.innerHTML = html; e.hidden = false; }
+        if (location.protocol === "file:" && !window.ONCOSPHERE_STANDALONE) {
+            showError("this page needs a web server, it won't work if you just double click it (browsers block js modules on file://). Try running this on a server and try again.");
+        }
+        window.addEventListener("error", function (ev) {
+            var src = ev.filename ? " (" + ev.filename.split("/").slice(-2).join("/") + ":" + ev.lineno + ")" : "";
+            showError("error: " + ev.message + src + ". if a file failed to load, make sure the whole grid folder is there and you're using a server.");
+        });
+        setTimeout(function () {
+            if (!document.body.dataset.ready && document.getElementById("error").hidden)
+                showError("app didn't start after 15 seconds, check the console (F12).");
+        }, 15000);
+    </script>
+    <script type="module" src="./app.js"></script>
 </body>
+
 </html>
