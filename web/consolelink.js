@@ -1,4 +1,3 @@
-
 export const CONSOLE_BAUD = 115200;
 
 export function parseLine(line) {
@@ -98,6 +97,14 @@ export class ConsoleLink {
 }
 
 export const VIAL_DEFAULTS = {
+  "C32F108F": "doxorubicin",
+  "C291536F": "porfimer",
+  "C29035DF": "goserelin",
+  "C4DE5B6F": "trastuzumabDeruxtecan",
+  "C32E3E3F": "radiation",
+  "C325E88F": "pembrolizumab",
+  "C33FA1FF": "carboplatin",
+  "DE9F1472": "paclitaxel",
 };
 const VIAL_KEY = "oncosphere-vials";
 
