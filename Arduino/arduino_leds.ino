@@ -11,6 +11,7 @@
 //         Arduino Mega has 8192 -> all 5 panels fine. ESP32 also fine (note to come back to later: arduino is 3.3V and the LEDs are 5V, 
 // do we need a level shifter??)
 
+
 #include <FastLED.h>
 
 #define DATA_PIN    6
@@ -18,12 +19,13 @@
 #define LEDS_PER_PANEL 256
 #define NUM_LEDS    (NUM_PANELS * LEDS_PER_PANEL)
 #define BRIGHTNESS  60          
-#define BAUD        1000000      // NOTE IMPORTAT NOTE this has to match BAUD in web/ledlink.js. if frames glitch drop both to 500000 
+#define BAUD        500000      // NOTE IMPORTAT NOTE this has to match BAUD in web/ledlink.js. if frames glitch drop both to 500000 
 
 CRGB leds[NUM_LEDS];
 unsigned long lastReady = 0;
 
 void sayReady() {
+  while (Serial.available()) Serial.read(); // Clear any leftover/corrupted bytes
   Serial.write('R');
   Serial.write((uint8_t)NUM_PANELS);
   lastReady = millis();
@@ -66,3 +68,4 @@ void loop() {
     sayReady();                                     
   }
 }
+
