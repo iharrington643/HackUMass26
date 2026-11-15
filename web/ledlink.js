@@ -1,6 +1,6 @@
 // talks to the Arduino over USB using the browser's Web Serial API
 
-export const BAUD = 1000000;   // NOTE NOTE NOTE THIS IS AN IMPORTANT NOTE this must match BAUD in the .ino. if frames glitch, drop both to 500000
+export const BAUD = 500000;   // NOTE NOTE NOTE THIS IS AN IMPORTANT NOTE this must match BAUD in the .ino. if frames glitch, drop both to 500000
 
 export class LedLink {
   constructor() {
