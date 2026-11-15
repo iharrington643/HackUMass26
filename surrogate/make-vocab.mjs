@@ -1,4 +1,4 @@
-// writes surrogate/vocab.json (cancer + regimen lists) so python and the app agree on the columns
+// writes surrogate/vocab.json (cancer + regimen lists)
 import { writeFileSync } from "node:fs";
 import { CANCER_TYPES } from "../cancers.js";
 import { REGIMENS, regimenTreatments } from "../schedules.js";
