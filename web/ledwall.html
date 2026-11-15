@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The LED Wall (retired) · OncoSphere</title>
+<meta name="description" content="The five-panel LED wall we planned for OncoSphere, what it would have shown, and why we unplugged it.">
+<script type="importmap">{ "imports": { "three": "./vendor/three.module.js", "three/addons/": "./vendor/" } }</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Chakra+Petch:wght@400;500;600;700&family=Exo+2:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%2300f0ff%27 stroke-width=%271.6%27%3E%3Ccircle cx=%2712%27 cy=%2712%27 r=%279%27/%3E%3Cellipse cx=%2712%27 cy=%2712%27 rx=%279%27 ry=%273.6%27/%3E%3Ccircle cx=%2715.5%27 cy=%279%27 r=%272%27 fill=%27%23f07a3d%27 stroke=%27none%27/%3E%3C/svg%3E">
+<!-- design mixes three free Tooplate templates: 2165 Neon Carbon, 2144 Parallax Depth, 2145 Eco Lume (tooplate.com) -->
+</head>
+<body data-page="ledwall.html">
+<div class="stars"></div><div class="bg-grid"></div><div class="particles"></div><div class="mouse-ring"></div>
+
+<aside class="sidebar" aria-label="Main navigation">
+  <a href="index.html" class="brand-mark" title="OncoSphere"><svg viewBox="0 0 24 24" fill="none" stroke="#00f0ff" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="9" ry="3.6"/><ellipse cx="12" cy="12" rx="3.6" ry="9"/><circle cx="15.5" cy="9" r="1.6" fill="#f07a3d" stroke="none"/></svg></a>
+  <nav class="side-links">
+      <a href="index.html" class="side-link" title="Home"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg><span>Home</span></a>
+      <a href="simulator.html" class="side-link" title="Simulate"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="9" ry="3.5"/><path d="M12 3v18"/></svg><span>Simulate</span></a>
+      <a href="science.html" class="side-link" title="Science"><svg viewBox="0 0 24 24"><path d="M9 3h6"/><path d="M10 3v6L4 20h16l-6-11V3"/></svg><span>Science</span></a>
+      <a href="model.html" class="side-link" title="Model"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/><path d="M12 7v4M12 11l-6 5M12 11l6 5"/></svg><span>Model</span></a>
+      <a href="impact.html" class="side-link" title="Impact"><svg viewBox="0 0 24 24"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg><span>Impact</span></a>
+      <a href="research.html" class="side-link" title="Research"><svg viewBox="0 0 24 24"><path d="M4 4h6a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H4z"/><path d="M20 4h-6a3 3 0 0 0-3 3v13a2 2 0 0 1 2-2h7z"/></svg><span>Research</span></a>
+      <a href="ledwall.html" class="side-link active" title="LED Wall"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18"/><circle cx="8" cy="8" r="1"/><circle cx="12" cy="8" r="1"/><circle cx="16" cy="8" r="1"/><circle cx="8" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="16" cy="12" r="1"/><circle cx="8" cy="16" r="1"/><circle cx="12" cy="16" r="1"/><circle cx="16" cy="16" r="1"/></svg><span>LED Wall</span></a>
+  </nav>
+  <div class="side-status"><div class="lbl">SIM</div><div class="on">ONLINE</div><div class="clock">T+00:00</div></div>
+</aside>
+<button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+<nav class="mobile-nav" aria-label="Mobile navigation">
+  <a href="index.html">Home</a>
+  <a href="simulator.html">Simulate</a>
+  <a href="science.html">Science</a>
+  <a href="model.html">Model</a>
+  <a href="impact.html">Impact</a>
+  <a href="research.html">Research</a>
+  <a href="ledwall.html">LED Wall</a>
+</nav>
+
+<main class="main">
+  <header class="hud">
+    <div class="hud-title">OncoSphere</div>
+    <div class="hud-crumb"><b>&gt;</b> led wall <b>&gt;</b> retired</div>
+    <div class="hud-stats"><div class="hud-stat">PANELS <b>5</b></div><div class="hud-div"></div><div class="hud-stat">LEDS <b>1,280</b></div><div class="hud-div"></div><div class="hud-stat hide-md">STATUS <b>UNPLUGGED</b></div><div class="hud-div"></div><div class="hud-stat hide-md">REASON <b>SAFETY</b></div></div>
+  </header>
+
+  <section class="hero short">
+    <div class="layer layer-glow" data-speed="0.12"></div>
+    <div class="layer" data-speed="0.3">
+      <div class="rects bl"><div class="rect" style="width:84px;height:54px"></div><div class="rect" style="width:110px;height:66px"></div><div class="rect" style="width:92px;height:72px"></div><div class="rect" style="width:104px;height:48px"></div><div class="rect" style="width:78px;height:60px"></div><div class="rect" style="width:116px;height:78px"></div></div>
+      <div class="rects tr"><div class="rect" style="width:78px;height:68px"></div><div class="rect" style="width:98px;height:52px"></div><div class="rect" style="width:72px;height:62px"></div><div class="rect" style="width:88px;height:48px"></div></div>
+    </div>
+    <div class="layer" data-speed="0.5"><div class="orb" style="top:18%"></div><div class="orb two"></div></div>
+    <div class="hero-copy reveal">
+      <div class="tag">// retired hardware</div>
+      <h1 class="mega md">The LED wall<br>that wasn't</h1>
+      <p class="lede">We built a five-panel LED wall to show the tumor in glowing 3D slices. Then one of the power adapters started <strong>smoking and sparking</strong>, even though the wiring checked out. We unplugged it for good. Here's what it would have looked like, and why it's not part of the demo.</p>
+      <div class="cta-row"><a href="#preview" class="btn btn-primary">See the preview</a><a href="#why" class="btn btn-ghost">Why we pulled it</a></div>
+    </div>
+    <div class="hero-visual">
+      <div class="orbit-ring"></div><div class="orbit-ring r2"></div>
+      <canvas data-scene="ledwall" aria-label="3D animation"></canvas>
+      <div class="visual-label" style="top:12%;left:4%">5 × 16×16 PANELS</div><div class="visual-label" style="bottom:14%;right:4%;border-color:#ff8c1a;color:#ff8c1a">THE ADAPTER</div>
+    </div>
+    <a href="#start" class="next-btn" aria-label="Scroll down"><div class="pyramid"><div class="pyr-face"></div><div class="pyr-face"></div><div class="pyr-face"></div><div class="pyr-face"></div></div></a>
+  </section>
+  <div id="start"></div>
+  <div class="stats reveal">
+    <div class="stat"><div class="n" data-count="1280">0</div><div class="l">LEDs planned</div></div>
+    <div class="stat"><div class="n" data-count="5">0</div><div class="l">panels, one slice each</div></div>
+    <div class="stat"><div class="n" data-count="77" data-suffix=" A">0</div><div class="l">worst case at full white</div></div>
+    <div class="stat"><div class="n" data-count="0">0</div><div class="l">used in the demo</div></div>
+  </div>
+
+  <section class="section" id="preview">
+    <div class="sec-tag">// 01 · what it would have shown</div>
+    <h2 class="sec-title reveal">A tumor in five slices</h2>
+    <p class="sec-lede reveal">Flat panels can't show a sphere, so each panel was going to be one slice through the tumor, front to back: small, big, biggest, big, small. The preview below is the <b>real code</b> that would have driven the wall (<code>web/ledframe.js</code>), running on a live simulation in your browser.</p>
+    <div class="gap-grid g2">
+      <div class="card tech reveal">
+        <div class="card-id">live preview · same frames the Arduino would have gotten</div>
+        <canvas id="ledPreview" width="560" height="200" style="width:100%;height:auto;display:block;margin-top:10px"></canvas>
+        <div class="ctrl-row" style="margin-top:12px"><span id="ledDay" class="muted">loading…</span>
+          &nbsp; <button id="ledTreat" class="btn btn-ghost" style="padding:6px 12px">give the red bottle (doxorubicin)</button>
+          <button id="ledRad" class="btn btn-ghost" style="padding:6px 12px">give the yellow bottle (radiation)</button>
+          <button id="ledReset" class="btn btn-ghost" style="padding:6px 12px">new tumor</button></div>
+      </div>
+      <div class="card tech reveal">
+        <div class="card-id">how slices map to panels</div>
+        <svg viewBox="0 0 440 260" class="diagram" role="img" aria-label="A sphere cut into five slices, each shown on one panel">
+          <defs><radialGradient id="sph" cx="40%" cy="38%"><stop offset="0" stop-color="#3d7eff"/><stop offset="0.7" stop-color="#284a86"/><stop offset="1" stop-color="#15233f"/></radialGradient></defs>
+          <circle cx="90" cy="130" r="72" fill="url(#sph)" stroke="#00f0ff" stroke-opacity=".4"/>
+          <line x1="38" y1="80" x2="38" y2="180" stroke="#ffd60a" stroke-dasharray="3 3"/><line x1="64" y1="63" x2="64" y2="197" stroke="#ffd60a" stroke-dasharray="3 3"/><line x1="90" y1="58" x2="90" y2="202" stroke="#ffd60a" stroke-dasharray="3 3"/><line x1="116" y1="63" x2="116" y2="197" stroke="#ffd60a" stroke-dasharray="3 3"/><line x1="142" y1="80" x2="142" y2="180" stroke="#ffd60a" stroke-dasharray="3 3"/>
+          <rect x="196" y="106" width="42" height="42" fill="#0a0d12" stroke="#00f0ff" stroke-opacity=".5"/><circle cx="217" cy="127" r="9" fill="#3d7eff"/><circle cx="217" cy="127" r="3" fill="#284a86"/><text x="217" y="168" fill="#9aa4b2" font-size="10" text-anchor="middle">panel 1</text><rect x="244" y="106" width="42" height="42" fill="#0a0d12" stroke="#00f0ff" stroke-opacity=".5"/><circle cx="265" cy="127" r="15" fill="#3d7eff"/><circle cx="265" cy="127" r="8" fill="#284a86"/><text x="265" y="168" fill="#9aa4b2" font-size="10" text-anchor="middle">panel 2</text><rect x="292" y="106" width="42" height="42" fill="#0a0d12" stroke="#00f0ff" stroke-opacity=".5"/><circle cx="313" cy="127" r="18" fill="#3d7eff"/><circle cx="313" cy="127" r="10" fill="#284a86"/><text x="313" y="168" fill="#9aa4b2" font-size="10" text-anchor="middle">panel 3</text><rect x="340" y="106" width="42" height="42" fill="#0a0d12" stroke="#00f0ff" stroke-opacity=".5"/><circle cx="361" cy="127" r="15" fill="#3d7eff"/><circle cx="361" cy="127" r="8" fill="#284a86"/><text x="361" y="168" fill="#9aa4b2" font-size="10" text-anchor="middle">panel 4</text><rect x="388" y="106" width="42" height="42" fill="#0a0d12" stroke="#00f0ff" stroke-opacity=".5"/><circle cx="409" cy="127" r="9" fill="#3d7eff"/><circle cx="409" cy="127" r="3" fill="#284a86"/><text x="409" y="168" fill="#9aa4b2" font-size="10" text-anchor="middle">panel 5</text>
+          <path d="M168 130 h20" stroke="#00f0ff" marker-end="url(#arr)"/>
+          <defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#00f0ff"/></marker></defs>
+          <text x="90" y="232" fill="#9aa4b2" font-size="11" text-anchor="middle">5 cuts through the sphere</text>
+          <text x="315" y="200" fill="#9aa4b2" font-size="11" text-anchor="middle">one slice per 16×16 panel</text>
+        </svg>
+        <p class="muted small">Each LED averaged a small patch of grid cells, so colors matched the 3D view: blue rim, dark resting core, and resistant clones in their pill bottle's color.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band" style="max-width:none"><div style="max-width:1400px;margin:0 auto">
+    <div class="sec-tag">// 02 · how it was wired</div>
+    <h2 class="sec-title reveal">The planned build</h2>
+    <p class="sec-lede reveal">The browser did all the drawing and streamed finished frames over USB. The Arduino just passed bytes to the panels. Each panel got its own 5 V supply through a barrel-jack-to-screw-terminal adapter, and that adapter is where things went wrong.</p>
+    <div class="card tech reveal">
+      <svg viewBox="0 0 1000 380" class="diagram wide" role="img" aria-label="Wiring diagram: computer to Arduino by USB, Arduino pin 6 to the first panel, panels chained by data, each panel powered by its own 5 V supply through an adapter">
+        <defs><marker id="arw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#00f0ff"/></marker>
+          <marker id="arp" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#e5383b"/></marker></defs>
+        <rect x="20" y="40" width="130" height="80" rx="6" fill="#121722" stroke="#00f0ff" stroke-opacity=".6"/><text x="85" y="76" fill="#e8edf5" font-size="14" text-anchor="middle">Laptop / Pi</text><text x="85" y="96" fill="#9aa4b2" font-size="11" text-anchor="middle">builds each frame</text>
+        <path d="M150 80 H220" stroke="#00f0ff" stroke-width="2" marker-end="url(#arw)"/><text x="185" y="70" fill="#9aa4b2" font-size="11" text-anchor="middle">USB</text>
+        <rect x="222" y="40" width="130" height="80" rx="6" fill="#121722" stroke="#00f0ff" stroke-opacity=".6"/><text x="287" y="76" fill="#e8edf5" font-size="14" text-anchor="middle">Arduino Mega</text><text x="287" y="96" fill="#9aa4b2" font-size="11" text-anchor="middle">FastLED, 1 Mbaud</text>
+        <path d="M352 80 H410" stroke="#00f0ff" stroke-width="2" marker-end="url(#arw)"/><text x="381" y="70" fill="#9aa4b2" font-size="11" text-anchor="middle">pin 6</text><text x="381" y="98" fill="#9aa4b2" font-size="11" text-anchor="middle">330 Ω</text>
+        <rect x="412" y="40" width="96" height="80" fill="#0a0d12" stroke="#00f0ff" stroke-opacity=".6"/>
+        <g opacity=".85"><circle cx="424.0" cy="53" r="3" fill="#3d7eff"/><circle cx="438.4" cy="53" r="3" fill="#284a86"/><circle cx="452.8" cy="53" r="3" fill="#e5383b"/><circle cx="467.2" cy="53" r="3" fill="#3d7eff"/><circle cx="481.6" cy="53" r="3" fill="#ffd60a"/><circle cx="496.0" cy="53" r="3" fill="#3d7eff"/><circle cx="424.0" cy="66" r="3" fill="#3d7eff"/><circle cx="438.4" cy="66" r="3" fill="#284a86"/><circle cx="452.8" cy="66" r="3" fill="#e5383b"/><circle cx="467.2" cy="66" r="3" fill="#3d7eff"/><circle cx="481.6" cy="66" r="3" fill="#ffd60a"/><circle cx="496.0" cy="66" r="3" fill="#3d7eff"/><circle cx="424.0" cy="79" r="3" fill="#3d7eff"/><circle cx="438.4" cy="79" r="3" fill="#284a86"/><circle cx="452.8" cy="79" r="3" fill="#e5383b"/><circle cx="467.2" cy="79" r="3" fill="#3d7eff"/><circle cx="481.6" cy="79" r="3" fill="#ffd60a"/><circle cx="496.0" cy="79" r="3" fill="#3d7eff"/><circle cx="424.0" cy="92" r="3" fill="#3d7eff"/><circle cx="438.4" cy="92" r="3" fill="#284a86"/><circle cx="452.8" cy="92" r="3" fill="#e5383b"/><circle cx="467.2" cy="92" r="3" fill="#3d7eff"/><circle cx="481.6" cy="92" r="3" fill="#ffd60a"/><circle cx="496.0" cy="92" r="3" fill="#3d7eff"/><circle cx="424.0" cy="105" r="3" fill="#3d7eff"/><circle cx="438.4" cy="105" r="3" fill="#284a86"/><circle cx="452.8" cy="105" r="3" fill="#e5383b"/><circle cx="467.2" cy="105" r="3" fill="#3d7eff"/><circle cx="481.6" cy="105" r="3" fill="#ffd60a"/><circle cx="496.0" cy="105" r="3" fill="#3d7eff"/><circle cx="424.0" cy="118" r="3" fill="#3d7eff"/><circle cx="438.4" cy="118" r="3" fill="#284a86"/><circle cx="452.8" cy="118" r="3" fill="#e5383b"/><circle cx="467.2" cy="118" r="3" fill="#3d7eff"/><circle cx="481.6" cy="118" r="3" fill="#ffd60a"/><circle cx="496.0" cy="118" r="3" fill="#3d7eff"/></g>
+        <text x="460" y="30" fill="#9aa4b2" font-size="11" text-anchor="middle">panel 1 · 256 LEDs</text>
+        <path d="M508 80 H528" stroke="#00f0ff" stroke-width="2" marker-end="url(#arw)"/>
+        <path d="M460 250 V122" stroke="#e5383b" stroke-width="2" marker-end="url(#arp)"/>
+        <rect x="430" y="250" width="60" height="30" rx="4" fill="#1a1f29" stroke="#555c68" stroke-width="1"/>
+        <text x="460" y="269" fill="#9aa4b2" font-size="10" text-anchor="middle">adapter</text>
+        <path d="M460 320 V282" stroke="#e5383b" stroke-width="2"/>
+        <rect x="422" y="320" width="76" height="40" rx="6" fill="#121722" stroke="#555c68"/><text x="460" y="345" fill="#e8edf5" font-size="11" text-anchor="middle">5 V · 10 A</text><rect x="528" y="40" width="96" height="80" fill="#0a0d12" stroke="#00f0ff" stroke-opacity=".6"/>
+        <g opacity=".85"><circle cx="540.0" cy="53" r="3" fill="#284a86"/><circle cx="554.4" cy="53" r="3" fill="#e5383b"/><circle cx="568.8" cy="53" r="3" fill="#3d7eff"/><circle cx="583.2" cy="53" r="3" fill="#ffd60a"/><circle cx="597.6" cy="53" r="3" fill="#3d7eff"/><circle cx="612.0" cy="53" r="3" fill="#3d7eff"/><circle cx="540.0" cy="66" r="3" fill="#284a86"/><circle cx="554.4" cy="66" r="3" fill="#e5383b"/><circle cx="568.8" cy="66" r="3" fill="#3d7eff"/><circle cx="583.2" cy="66" r="3" fill="#ffd60a"/><circle cx="597.6" cy="66" r="3" fill="#3d7eff"/><circle cx="612.0" cy="66" r="3" fill="#3d7eff"/><circle cx="540.0" cy="79" r="3" fill="#284a86"/><circle cx="554.4" cy="79" r="3" fill="#e5383b"/><circle cx="568.8" cy="79" r="3" fill="#3d7eff"/><circle cx="583.2" cy="79" r="3" fill="#ffd60a"/><circle cx="597.6" cy="79" r="3" fill="#3d7eff"/><circle cx="612.0" cy="79" r="3" fill="#3d7eff"/><circle cx="540.0" cy="92" r="3" fill="#284a86"/><circle cx="554.4" cy="92" r="3" fill="#e5383b"/><circle cx="568.8" cy="92" r="3" fill="#3d7eff"/><circle cx="583.2" cy="92" r="3" fill="#ffd60a"/><circle cx="597.6" cy="92" r="3" fill="#3d7eff"/><circle cx="612.0" cy="92" r="3" fill="#3d7eff"/><circle cx="540.0" cy="105" r="3" fill="#284a86"/><circle cx="554.4" cy="105" r="3" fill="#e5383b"/><circle cx="568.8" cy="105" r="3" fill="#3d7eff"/><circle cx="583.2" cy="105" r="3" fill="#ffd60a"/><circle cx="597.6" cy="105" r="3" fill="#3d7eff"/><circle cx="612.0" cy="105" r="3" fill="#3d7eff"/><circle cx="540.0" cy="118" r="3" fill="#284a86"/><circle cx="554.4" cy="118" r="3" fill="#e5383b"/><circle cx="568.8" cy="118" r="3" fill="#3d7eff"/><circle cx="583.2" cy="118" r="3" fill="#ffd60a"/><circle cx="597.6" cy="118" r="3" fill="#3d7eff"/><circle cx="612.0" cy="118" r="3" fill="#3d7eff"/></g>
+        <text x="576" y="30" fill="#9aa4b2" font-size="11" text-anchor="middle">panel 2 · 256 LEDs</text>
+        <path d="M624 80 H644" stroke="#00f0ff" stroke-width="2" marker-end="url(#arw)"/>
+        <path d="M576 250 V122" stroke="#e5383b" stroke-width="2" marker-end="url(#arp)"/>
+        <rect x="546" y="250" width="60" height="30" rx="4" fill="#1a1f29" stroke="#555c68" stroke-width="1"/>
+        <text x="576" y="269" fill="#9aa4b2" font-size="10" text-anchor="middle">adapter</text>
+        <path d="M576 320 V282" stroke="#e5383b" stroke-width="2"/>
+        <rect x="538" y="320" width="76" height="40" rx="6" fill="#121722" stroke="#555c68"/><text x="576" y="345" fill="#e8edf5" font-size="11" text-anchor="middle">5 V · 10 A</text><rect x="644" y="40" width="96" height="80" fill="#0a0d12" stroke="#00f0ff" stroke-opacity=".6"/>
+        <g opacity=".85"><circle cx="656.0" cy="53" r="3" fill="#e5383b"/><circle cx="670.4" cy="53" r="3" fill="#3d7eff"/><circle cx="684.8" cy="53" r="3" fill="#ffd60a"/><circle cx="699.2" cy="53" r="3" fill="#3d7eff"/><circle cx="713.6" cy="53" r="3" fill="#3d7eff"/><circle cx="728.0" cy="53" r="3" fill="#284a86"/><circle cx="656.0" cy="66" r="3" fill="#e5383b"/><circle cx="670.4" cy="66" r="3" fill="#3d7eff"/><circle cx="684.8" cy="66" r="3" fill="#ffd60a"/><circle cx="699.2" cy="66" r="3" fill="#3d7eff"/><circle cx="713.6" cy="66" r="3" fill="#3d7eff"/><circle cx="728.0" cy="66" r="3" fill="#284a86"/><circle cx="656.0" cy="79" r="3" fill="#e5383b"/><circle cx="670.4" cy="79" r="3" fill="#3d7eff"/><circle cx="684.8" cy="79" r="3" fill="#ffd60a"/><circle cx="699.2" cy="79" r="3" fill="#3d7eff"/><circle cx="713.6" cy="79" r="3" fill="#3d7eff"/><circle cx="728.0" cy="79" r="3" fill="#284a86"/><circle cx="656.0" cy="92" r="3" fill="#e5383b"/><circle cx="670.4" cy="92" r="3" fill="#3d7eff"/><circle cx="684.8" cy="92" r="3" fill="#ffd60a"/><circle cx="699.2" cy="92" r="3" fill="#3d7eff"/><circle cx="713.6" cy="92" r="3" fill="#3d7eff"/><circle cx="728.0" cy="92" r="3" fill="#284a86"/><circle cx="656.0" cy="105" r="3" fill="#e5383b"/><circle cx="670.4" cy="105" r="3" fill="#3d7eff"/><circle cx="684.8" cy="105" r="3" fill="#ffd60a"/><circle cx="699.2" cy="105" r="3" fill="#3d7eff"/><circle cx="713.6" cy="105" r="3" fill="#3d7eff"/><circle cx="728.0" cy="105" r="3" fill="#284a86"/><circle cx="656.0" cy="118" r="3" fill="#e5383b"/><circle cx="670.4" cy="118" r="3" fill="#3d7eff"/><circle cx="684.8" cy="118" r="3" fill="#ffd60a"/><circle cx="699.2" cy="118" r="3" fill="#3d7eff"/><circle cx="713.6" cy="118" r="3" fill="#3d7eff"/><circle cx="728.0" cy="118" r="3" fill="#284a86"/></g>
+        <text x="692" y="30" fill="#9aa4b2" font-size="11" text-anchor="middle">panel 3 · 256 LEDs</text>
+        <path d="M740 80 H760" stroke="#00f0ff" stroke-width="2" marker-end="url(#arw)"/>
+        <path d="M692 250 V122" stroke="#e5383b" stroke-width="2" marker-end="url(#arp)"/>
+        <rect x="662" y="250" width="60" height="30" rx="4" fill="#3a1f0c" stroke="#ff8c1a" stroke-width="2"/>
+        <text x="692" y="269" fill="#ff8c1a" font-size="10" text-anchor="middle">adapter</text>
+        <path d="M692 320 V282" stroke="#e5383b" stroke-width="2"/>
+        <rect x="654" y="320" width="76" height="40" rx="6" fill="#121722" stroke="#555c68"/><text x="692" y="345" fill="#e8edf5" font-size="11" text-anchor="middle">5 V · 10 A</text><rect x="760" y="40" width="96" height="80" fill="#0a0d12" stroke="#00f0ff" stroke-opacity=".6"/>
+        <g opacity=".85"><circle cx="772.0" cy="53" r="3" fill="#3d7eff"/><circle cx="786.4" cy="53" r="3" fill="#ffd60a"/><circle cx="800.8" cy="53" r="3" fill="#3d7eff"/><circle cx="815.2" cy="53" r="3" fill="#3d7eff"/><circle cx="829.6" cy="53" r="3" fill="#284a86"/><circle cx="844.0" cy="53" r="3" fill="#e5383b"/><circle cx="772.0" cy="66" r="3" fill="#3d7eff"/><circle cx="786.4" cy="66" r="3" fill="#ffd60a"/><circle cx="800.8" cy="66" r="3" fill="#3d7eff"/><circle cx="815.2" cy="66" r="3" fill="#3d7eff"/><circle cx="829.6" cy="66" r="3" fill="#284a86"/><circle cx="844.0" cy="66" r="3" fill="#e5383b"/><circle cx="772.0" cy="79" r="3" fill="#3d7eff"/><circle cx="786.4" cy="79" r="3" fill="#ffd60a"/><circle cx="800.8" cy="79" r="3" fill="#3d7eff"/><circle cx="815.2" cy="79" r="3" fill="#3d7eff"/><circle cx="829.6" cy="79" r="3" fill="#284a86"/><circle cx="844.0" cy="79" r="3" fill="#e5383b"/><circle cx="772.0" cy="92" r="3" fill="#3d7eff"/><circle cx="786.4" cy="92" r="3" fill="#ffd60a"/><circle cx="800.8" cy="92" r="3" fill="#3d7eff"/><circle cx="815.2" cy="92" r="3" fill="#3d7eff"/><circle cx="829.6" cy="92" r="3" fill="#284a86"/><circle cx="844.0" cy="92" r="3" fill="#e5383b"/><circle cx="772.0" cy="105" r="3" fill="#3d7eff"/><circle cx="786.4" cy="105" r="3" fill="#ffd60a"/><circle cx="800.8" cy="105" r="3" fill="#3d7eff"/><circle cx="815.2" cy="105" r="3" fill="#3d7eff"/><circle cx="829.6" cy="105" r="3" fill="#284a86"/><circle cx="844.0" cy="105" r="3" fill="#e5383b"/><circle cx="772.0" cy="118" r="3" fill="#3d7eff"/><circle cx="786.4" cy="118" r="3" fill="#ffd60a"/><circle cx="800.8" cy="118" r="3" fill="#3d7eff"/><circle cx="815.2" cy="118" r="3" fill="#3d7eff"/><circle cx="829.6" cy="118" r="3" fill="#284a86"/><circle cx="844.0" cy="118" r="3" fill="#e5383b"/></g>
+        <text x="808" y="30" fill="#9aa4b2" font-size="11" text-anchor="middle">panel 4 · 256 LEDs</text>
+        <path d="M856 80 H876" stroke="#00f0ff" stroke-width="2" marker-end="url(#arw)"/>
+        <path d="M808 250 V122" stroke="#e5383b" stroke-width="2" marker-end="url(#arp)"/>
+        <rect x="778" y="250" width="60" height="30" rx="4" fill="#1a1f29" stroke="#555c68" stroke-width="1"/>
+        <text x="808" y="269" fill="#9aa4b2" font-size="10" text-anchor="middle">adapter</text>
+        <path d="M808 320 V282" stroke="#e5383b" stroke-width="2"/>
+        <rect x="770" y="320" width="76" height="40" rx="6" fill="#121722" stroke="#555c68"/><text x="808" y="345" fill="#e8edf5" font-size="11" text-anchor="middle">5 V · 10 A</text><rect x="876" y="40" width="96" height="80" fill="#0a0d12" stroke="#00f0ff" stroke-opacity=".6"/>
+        <g opacity=".85"><circle cx="888.0" cy="53" r="3" fill="#ffd60a"/><circle cx="902.4" cy="53" r="3" fill="#3d7eff"/><circle cx="916.8" cy="53" r="3" fill="#3d7eff"/><circle cx="931.2" cy="53" r="3" fill="#284a86"/><circle cx="945.6" cy="53" r="3" fill="#e5383b"/><circle cx="960.0" cy="53" r="3" fill="#3d7eff"/><circle cx="888.0" cy="66" r="3" fill="#ffd60a"/><circle cx="902.4" cy="66" r="3" fill="#3d7eff"/><circle cx="916.8" cy="66" r="3" fill="#3d7eff"/><circle cx="931.2" cy="66" r="3" fill="#284a86"/><circle cx="945.6" cy="66" r="3" fill="#e5383b"/><circle cx="960.0" cy="66" r="3" fill="#3d7eff"/><circle cx="888.0" cy="79" r="3" fill="#ffd60a"/><circle cx="902.4" cy="79" r="3" fill="#3d7eff"/><circle cx="916.8" cy="79" r="3" fill="#3d7eff"/><circle cx="931.2" cy="79" r="3" fill="#284a86"/><circle cx="945.6" cy="79" r="3" fill="#e5383b"/><circle cx="960.0" cy="79" r="3" fill="#3d7eff"/><circle cx="888.0" cy="92" r="3" fill="#ffd60a"/><circle cx="902.4" cy="92" r="3" fill="#3d7eff"/><circle cx="916.8" cy="92" r="3" fill="#3d7eff"/><circle cx="931.2" cy="92" r="3" fill="#284a86"/><circle cx="945.6" cy="92" r="3" fill="#e5383b"/><circle cx="960.0" cy="92" r="3" fill="#3d7eff"/><circle cx="888.0" cy="105" r="3" fill="#ffd60a"/><circle cx="902.4" cy="105" r="3" fill="#3d7eff"/><circle cx="916.8" cy="105" r="3" fill="#3d7eff"/><circle cx="931.2" cy="105" r="3" fill="#284a86"/><circle cx="945.6" cy="105" r="3" fill="#e5383b"/><circle cx="960.0" cy="105" r="3" fill="#3d7eff"/><circle cx="888.0" cy="118" r="3" fill="#ffd60a"/><circle cx="902.4" cy="118" r="3" fill="#3d7eff"/><circle cx="916.8" cy="118" r="3" fill="#3d7eff"/><circle cx="931.2" cy="118" r="3" fill="#284a86"/><circle cx="945.6" cy="118" r="3" fill="#e5383b"/><circle cx="960.0" cy="118" r="3" fill="#3d7eff"/></g>
+        <text x="924" y="30" fill="#9aa4b2" font-size="11" text-anchor="middle">panel 5 · 256 LEDs</text>
+
+        <path d="M924 250 V122" stroke="#e5383b" stroke-width="2" marker-end="url(#arp)"/>
+        <rect x="894" y="250" width="60" height="30" rx="4" fill="#1a1f29" stroke="#555c68" stroke-width="1"/>
+        <text x="924" y="269" fill="#9aa4b2" font-size="10" text-anchor="middle">adapter</text>
+        <path d="M924 320 V282" stroke="#e5383b" stroke-width="2"/>
+        <rect x="886" y="320" width="76" height="40" rx="6" fill="#121722" stroke="#555c68"/><text x="924" y="345" fill="#e8edf5" font-size="11" text-anchor="middle">5 V · 10 A</text>
+        <g transform="translate(700 226)"><path d="M0 0 l8 -14 l2 10 l10 -8 l-6 14 l10 -2 l-16 12z" fill="#ffd60a" stroke="#ff8c1a"/></g>
+        <text x="722" y="236" fill="#ff8c1a" font-size="12" font-weight="600">smoked + sparked here</text>
+        <path d="M287 120 V200 H460 V122" fill="none" stroke="#9aa4b2" stroke-dasharray="4 4"/><text x="300" y="194" fill="#9aa4b2" font-size="11">shared ground</text>
+        <text x="20" y="190" fill="#9aa4b2" font-size="11">data ──► (cyan)</text><text x="20" y="210" fill="#e5383b" font-size="11">5 V power (red)</text>
+        <text x="20" y="230" fill="#9aa4b2" font-size="11">Arduino powered by USB only</text>
+      </svg>
+    </div>
+  </div></section>
+
+  <section class="section" id="why">
+    <div class="sec-tag">// 03 · why we didn't use it</div>
+    <h2 class="sec-title reveal">Safety beat the light show</h2>
+    <div class="steps reveal">
+      <div class="step"><h4>Built</h4><p>A test sketch lit a single panel from the Uno. The browser-side frame code and preview were done and tested.</p></div>
+      <div class="step"><h4>Debugged</h4><p>After swapping between an Uno and a Mega, the panels stopped responding, on more than one panel.</p></div>
+      <div class="step"><h4>Smoke</h4><p>One of the barrel-jack adapters on a power cable started smoking and sparking.</p></div>
+      <div class="step"><h4>Checked</h4><p>We went back over the wiring and it was correct, which made it more worrying, not less.</p></div>
+      <div class="step"><h4>Unplugged</h4><p>No replacement on hand, and we wouldn't trust one from the same batch. The wall is retired.</p></div>
+    </div>
+    <div class="gap-grid g3" style="margin-top:26px">
+      <div class="card tech reveal"><div class="icon-tile"><svg viewBox="0 0 24 24"><path d="M12 3s6 7 6 11a6 6 0 0 1-12 0c0-4 6-11 6-11z"/></svg></div><h3>Lots of current</h3><p>1,280 LEDs at up to 60 mA each is about 77 A at full white. Even capped low, that's a lot running through small screw terminals and cheap adapters, all of it heat.</p></div>
+      <div class="card tech reveal"><div class="icon-tile"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></div><h3>Correct isn't always safe</h3><p>Correct wiring doesn't protect you from a bad part. A loose terminal, an underrated adapter, or a manufacturing defect can still get hot enough to smoke.</p></div>
+      <div class="card tech reveal"><div class="icon-tile"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0"/><circle cx="17" cy="9" r="2.5"/><path d="M15 20a5 5 0 0 1 6-4.5"/></svg></div><h3>A room full of people</h3><p>This was going on a table at a hackathon with people leaning over it. A part that's already sparked once doesn't belong there.</p></div>
+    </div>
+  </section>
+
+  <section class="section band" style="max-width:none"><div style="max-width:1400px;margin:0 auto">
+    <div class="sec-tag">// 04 · what replaced it</div>
+    <h2 class="sec-title reveal">The colors moved to the screen</h2>
+    <p class="sec-lede reveal">Everything the wall would have shown is in the 3D simulator, and the pill bottles still pick the treatment. Each bottle's color is the resistance color, so you still watch your treatment's color take over when the tumor learns to beat it.</p>
+    <div class="grid g4"><div class="card tech reveal bottle-card"><div class="bottle-swatch" style="background:#e5383b"></div><div class="card-id">key 1 · red bottle</div><h3>Doxorubicin</h3><p><b>Resisted by:</b> RCH or the drug pump (EFX)</p><p class="muted small">Why red: doxorubicin really is red, nicknamed the &quot;red devil&quot;.</p></div><div class="card tech reveal bottle-card"><div class="bottle-swatch" style="background:#141518"></div><div class="card-id">key 2 · black bottle</div><h3>Photofrin (porfimer)</h3><p><b>Resisted by:</b> RCH</p><p class="muted small">Why black: patients have to stay out of bright light afterward.</p></div><div class="card tech reveal bottle-card"><div class="bottle-swatch" style="background:#ff8c1a"></div><div class="card-id">key 3 · orange bottle</div><h3>Goserelin</h3><p><b>Resisted by:</b> target escape (RTA)</p><p class="muted small">Why orange: hormone therapy.</p></div><div class="card tech reveal bottle-card"><div class="bottle-swatch" style="background:#ff6fb5"></div><div class="card-id">key 4 · pink bottle</div><h3>Enhertu</h3><p><b>Resisted by:</b> RTA or the drug pump (EFX)</p><p class="muted small">Why pink: it's for HER2 breast cancer (pink ribbon).</p></div><div class="card tech reveal bottle-card"><div class="bottle-swatch" style="background:#ffd60a"></div><div class="card-id">key 5 · yellow bottle</div><h3>Radiation</h3><p><b>Resisted by:</b> better DNA repair (RAD)</p><p class="muted small">Why yellow: the radiation warning sign.</p></div><div class="card tech reveal bottle-card"><div class="bottle-swatch" style="background:#2ecc71"></div><div class="card-id">key 6 · green bottle</div><h3>Pembrolizumab</h3><p><b>Resisted by:</b> immune escape (IMM)</p><p class="muted small">Why green: a green light for T cells.</p></div><div class="card tech reveal bottle-card"><div class="bottle-swatch" style="background:#9aa0a6"></div><div class="card-id">key 7 · grey bottle</div><h3>Carboplatin</h3><p><b>Resisted by:</b> RCH</p><p class="muted small">Why grey: platinum is a grey metal.</p></div><div class="card tech reveal bottle-card"><div class="bottle-swatch" style="background:#f4f4f4"></div><div class="card-id">key 8 · white bottle</div><h3>Paclitaxel</h3><p><b>Resisted by:</b> RCH or the drug pump (EFX)</p><p class="muted small">Why white: it comes from the pale bark of the yew tree.</p></div></div>
+    <div class="cta-row reveal" style="margin-top:24px"><a href="simulator.html" class="btn btn-primary">Open the simulator</a><a href="science.html#bottles" class="btn btn-ghost">How bottle colors work</a></div>
+    <p class="muted small reveal" style="margin-top:16px">The LED code (<code>web/ledframe.js</code>, <code>web/ledlink.js</code>, <code>Arduino/arduino_leds*</code>) is still in the repo if anyone wants to build it later, with a trusted power supply.</p>
+  </div></section>
+
+  <footer class="footer">
+    <div class="footer-grid">
+      <div>
+        <div class="brand">ONCOSPHERE</div>
+        <p class="muted small" style="max-width:420px;margin-top:10px">A 3D tumor evolution and treatment-resistance simulator with a machine-learning forecast and a color-coded pill-bottle console. Built at HackUMass by Hope, Isabella, Rayne and Katla. Educational project, not medical advice.</p>
+      </div>
+      <div><h4>Pages</h4><ul><li><a href="index.html">Home</a></li><li><a href="simulator.html">Simulate</a></li><li><a href="science.html">Science</a></li><li><a href="model.html">Model</a></li><li><a href="impact.html">Impact</a></li><li><a href="research.html">Research</a></li><li><a href="ledwall.html">LED Wall</a></li></ul></div>
+      <div><h4>Built with</h4><ul>
+        <li><a href="https://threejs.org" target="_blank" rel="noopener">Three.js</a></li>
+        <li><a href="https://www.cancerrxgene.org" target="_blank" rel="noopener">GDSC</a> + <a href="https://www.cbioportal.org" target="_blank" rel="noopener">cBioPortal</a></li>
+        <li><a href="https://scikit-learn.org" target="_blank" rel="noopener">scikit-learn</a></li>
+        <li><a href="https://www.tooplate.com" target="_blank" rel="noopener">Tooplate templates</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 OncoSphere · HackUMass</span><span>oncosphere.health</span></div>
+  </footer>
+</main>
+
+<script src="charts.js"></script>
+<script src="site.js"></script>
+<script type="module">
+import { Simulation } from "../simulation.js";
+import { LED_DEFAULTS, buildFrame, drawPreview } from "./ledframe.js";
+const cv = document.getElementById("ledPreview"), label = document.getElementById("ledDay");
+let sim;
+function fresh() { sim = new Simulation({ seed: Math.floor(Math.random() * 1e6), cancer: "breast" }); sim.runDays(12); }
+fresh();
+const cfg = { ...LED_DEFAULTS, panels: 5, mode: "slices", gamma: 1 };
+let last = 0, visible = true;
+new IntersectionObserver((e) => { visible = e[0].isIntersecting; }).observe(cv);
+function loop(now) {
+  requestAnimationFrame(loop);
+  if (!visible || now - last < 120) return;
+  last = now;
+  sim.runDays(0.5);
+  drawPreview(cv, buildFrame(sim, cfg).preview, 5);
+  label.textContent = "day " + Math.floor(sim.day) + (sim.day > 140 ? " (restarting soon)" : "");
+  if (sim.day > 160) fresh();
+}
+requestAnimationFrame(loop);
+document.getElementById("ledTreat").onclick = () => sim.startPlan("doxQ21");
+document.getElementById("ledRad").onclick = () => sim.giveRadiation(2);
+document.getElementById("ledReset").onclick = fresh;
+</script>
+<script type="module" src="site3d.js"></script>
+</body>
+</html>

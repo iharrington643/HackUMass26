@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Science · OncoSphere</title>
+<meta name="description" content="The physics and biology behind OncoSphere: reaction-diffusion, evolution, dose-response and radiobiology.">
+<script type="importmap">{ "imports": { "three": "./vendor/three.module.js", "three/addons/": "./vendor/" } }</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Chakra+Petch:wght@400;500;600;700&family=Exo+2:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%2300f0ff%27 stroke-width=%271.6%27%3E%3Ccircle cx=%2712%27 cy=%2712%27 r=%279%27/%3E%3Cellipse cx=%2712%27 cy=%2712%27 rx=%279%27 ry=%273.6%27/%3E%3Ccircle cx=%2715.5%27 cy=%279%27 r=%272%27 fill=%27%23f07a3d%27 stroke=%27none%27/%3E%3C/svg%3E">
+<!-- design mixes three free Tooplate templates: 2165 Neon Carbon, 2144 Parallax Depth, 2145 Eco Lume (tooplate.com) -->
+</head>
+<body data-page="science.html">
+<div class="stars"></div><div class="bg-grid"></div><div class="particles"></div><div class="mouse-ring"></div>
+
+<aside class="sidebar" aria-label="Main navigation">
+  <a href="index.html" class="brand-mark" title="OncoSphere"><svg viewBox="0 0 24 24" fill="none" stroke="#00f0ff" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="9" ry="3.6"/><ellipse cx="12" cy="12" rx="3.6" ry="9"/><circle cx="15.5" cy="9" r="1.6" fill="#f07a3d" stroke="none"/></svg></a>
+  <nav class="side-links">
+      <a href="index.html" class="side-link" title="Home"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg><span>Home</span></a>
+      <a href="simulator.html" class="side-link" title="Simulate"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="9" ry="3.5"/><path d="M12 3v18"/></svg><span>Simulate</span></a>
+      <a href="science.html" class="side-link active" title="Science"><svg viewBox="0 0 24 24"><path d="M9 3h6"/><path d="M10 3v6L4 20h16l-6-11V3"/></svg><span>Science</span></a>
+      <a href="model.html" class="side-link" title="Model"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/><path d="M12 7v4M12 11l-6 5M12 11l6 5"/></svg><span>Model</span></a>
+      <a href="impact.html" class="side-link" title="Impact"><svg viewBox="0 0 24 24"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg><span>Impact</span></a>
+      <a href="research.html" class="side-link" title="Research"><svg viewBox="0 0 24 24"><path d="M4 4h6a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H4z"/><path d="M20 4h-6a3 3 0 0 0-3 3v13a2 2 0 0 1 2-2h7z"/></svg><span>Research</span></a>
+      <a href="ledwall.html" class="side-link" title="LED Wall"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18"/><circle cx="8" cy="8" r="1"/><circle cx="12" cy="8" r="1"/><circle cx="16" cy="8" r="1"/><circle cx="8" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="16" cy="12" r="1"/><circle cx="8" cy="16" r="1"/><circle cx="12" cy="16" r="1"/><circle cx="16" cy="16" r="1"/></svg><span>LED Wall</span></a>
+  </nav>
+  <div class="side-status"><div class="lbl">SIM</div><div class="on">ONLINE</div><div class="clock">T+00:00</div></div>
+</aside>
+<button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+<nav class="mobile-nav" aria-label="Mobile navigation">
+  <a href="index.html">Home</a>
+  <a href="simulator.html">Simulate</a>
+  <a href="science.html">Science</a>
+  <a href="model.html">Model</a>
+  <a href="impact.html">Impact</a>
+  <a href="research.html">Research</a>
+  <a href="ledwall.html">LED Wall</a>
+</nav>
+
+<main class="main">
+  <header class="hud">
+    <div class="hud-title">OncoSphere</div>
+    <div class="hud-crumb"><b>&gt;</b> science <b>&gt;</b> how it works</div>
+    <div class="hud-stats"><div class="hud-stat">O₂ LENGTH <b>3 cells</b></div><div class="hud-div"></div><div class="hud-stat">TRAITS <b>8</b></div><div class="hud-div"></div><div class="hud-stat hide-md">COST <b>12%/trait</b></div><div class="hud-div"></div><div class="hud-stat hide-md">OER <b>3</b></div></div>
+  </header>
+
+  <section class="hero short">
+    <div class="layer layer-glow" data-speed="0.12"></div>
+    <div class="layer" data-speed="0.3">
+      <div class="rects bl"><div class="rect" style="width:84px;height:54px"></div><div class="rect" style="width:110px;height:66px"></div><div class="rect" style="width:92px;height:72px"></div><div class="rect" style="width:104px;height:48px"></div><div class="rect" style="width:78px;height:60px"></div><div class="rect" style="width:116px;height:78px"></div></div>
+      <div class="rects tr"><div class="rect" style="width:78px;height:68px"></div><div class="rect" style="width:98px;height:52px"></div><div class="rect" style="width:72px;height:62px"></div><div class="rect" style="width:88px;height:48px"></div></div>
+    </div>
+    <div class="layer" data-speed="0.5"><div class="orb" style="top:18%"></div><div class="orb two"></div></div>
+    <div class="hero-copy reveal">
+      <div class="tag">// the science</div>
+      <h1 class="mega md">Physics<br>meets biology</h1>
+      <p class="lede">A tumor is a crowd of cells competing for oxygen, space and survival. OncoSphere models that crowd one cell at a time. Everything on this page is <strong>interactive</strong>: drag the sliders and watch the curves respond.</p>
+      <div class="cta-row"><a href="#diffusion" class="btn btn-primary">Start with oxygen</a><a href="research.html" class="btn btn-ghost">The math in detail</a></div>
+    </div>
+    <div class="hero-visual">
+      <div class="orbit-ring"></div><div class="orbit-ring r2"></div>
+      <canvas data-scene="lattice" aria-label="3D animation"></canvas>
+      <div class="visual-label" style="top:14%;left:6%">OXYGEN-RICH RIM</div><div class="visual-label" style="bottom:18%;right:6%;border-color:#284a86;color:#8fb0e8">STARVED CORE</div>
+    </div>
+    <a href="#start" class="next-btn" aria-label="Scroll down"><div class="pyramid"><div class="pyr-face"></div><div class="pyr-face"></div><div class="pyr-face"></div><div class="pyr-face"></div></div></a>
+  </section>
+  <div id="start"></div>
+  <section class="section">
+    <div class="sec-tag">// 01 · the tumor</div>
+    <h2 class="sec-title reveal">A world on a grid</h2>
+    <p class="sec-lede reveal">The tumor lives on a 3D grid inside a sphere. Each spot is the size of one cell. There are no blood vessels inside it: oxygen and drugs soak in from the edge, like a lab spheroid or a very young tumor.</p>
+    <div class="grid g4">
+      <div class="card tech reveal"><div class="card-id">lattice</div><div class="card-num">44<small>³</small></div><p>grid, 35,880 sites inside the sphere</p></div>
+      <div class="card tech reveal"><div class="card-id">resolution</div><div class="card-num">20<small>µm</small></div><p>per site, about one cell. The tumor is under 1 mm across</p></div>
+      <div class="card tech reveal"><div class="card-id">time step</div><div class="card-num">4<small>h</small></div><p>per step. Rates are per day and converted with 1 − e<sup>−rate·dt</sup></p></div>
+      <div class="card tech reveal"><div class="card-id">cell states</div><div class="card-num">4</div><p>empty, dividing, dormant (starving) and dead debris</p></div>
+    </div>
+  </section>
+
+  <section class="section band" id="diffusion" style="max-width:none"><div style="max-width:1400px;margin:0 auto">
+    <div class="sec-tag">// 02 · oxygen &amp; drugs</div>
+    <h2 class="sec-title reveal">Reaction-diffusion</h2>
+    <p class="sec-lede reveal">Oxygen spreads in from the edge while cells burn it. The balance between spreading and burning is one equation, and its answer has a natural length scale: the <b>penetration length</b> L. Every drug follows the same rule with its own L.</p>
+    <div class="eq reveal">0 = <span class="v">D</span>∇²<span class="v">C</span> − <span class="v">k</span>·<span class="v">C</span> &nbsp;&nbsp;⟹&nbsp;&nbsp; <span class="v">L</span> = √(<span class="v">D</span> / <span class="v">k</span>)<span class="c">// spreading in = being used up</span></div>
+    <div class="gap-grid g2" style="margin-top:26px">
+      <div class="card chart-card tech reveal "><h3>How deep does it reach?</h3><div class="sub">Steady-state level vs depth into a sphere of radius 20 cells. Oxygen has L ≈ 3 cells; drag to compare a drug.</div><div class="ctrl-row">your L: <input type="range" id="o2L" min="1" max="40" step="0.5" value="8"> <b id="o2Lv">8 cells</b></div><div id="ch-o2"></div></div>
+      <div class="card chart-card tech reveal "><h3>Penetration length per drug</h3><div class="sub">How far each drug gets before it falls to ~37%. Longer = reaches the starved core.</div><div id="ch-pen"></div></div>
+    </div>
+  </div></section>
+
+  <section class="section">
+    <div class="sec-tag">// 03 · evolution</div>
+    <h2 class="sec-title reveal">Mutation, selection, resistance</h2>
+    <p class="sec-lede reveal">Every division has a small chance to switch on a trait. Resistance always costs something (12% slower division per trait), so without treatment resistant cells lose. Under treatment they win. That trade-off is the whole story of drug resistance.</p>
+    <div class="grid g4">
+      <div class="card tech reveal"><div class="card-id">PRO</div><h3>Faster division</h3><p>Like KRAS, BRAF or PIK3CA driver mutations.</p></div><div class="card tech reveal"><div class="card-id">HYP</div><h3>Survives low oxygen</h3><p>Like TP53 loss: keeps dividing where others go dormant.</p></div><div class="card tech reveal"><div class="card-id">MUT</div><h3>Mutator</h3><p>Mutates 10× faster, like POLE or mismatch-repair defects.</p></div><div class="card tech reveal"><div class="card-id">RCH</div><h3>Chemo resistance</h3><p>Raises the dose a cell needs (the resistance fold).</p></div><div class="card tech reveal"><div class="card-id">EFX</div><h3>Drug pump</h3><p>Pumps drug out, cutting the inside level 6×.</p></div><div class="card tech reveal"><div class="card-id">RAD</div><h3>Better DNA repair</h3><p>Shrugs off radiation damage.</p></div><div class="card tech reveal"><div class="card-id">RTA</div><h3>Target escape</h3><p>Hormone or HER2 target stops mattering.</p></div><div class="card tech reveal"><div class="card-id">IMM</div><h3>Immune escape</h3><p>Hides from T cells, beats checkpoint inhibitors.</p></div>
+    </div>
+    <div class="gap-grid g2" style="margin-top:26px">
+      <div class="card chart-card tech reveal "><h3>Competitive release, in two equations</h3><div class="sub">Sensitive vs resistant cells sharing space, chemo every 21 days. A stronger drug clears the competition, so resistance takes over sooner.</div><div class="ctrl-row">drug strength: <input type="range" id="evoK" min="0" max="3" step="0.05" value="1"> <b id="evoKv">1.0×</b> &nbsp; resistance cost: <input type="range" id="evoC" min="0" max="0.4" step="0.01" value="0.12"> <b id="evoCv">12%</b></div><div id="ch-evo"></div></div>
+      <div class="card tech reveal">
+        <div class="card-id">why it matters</div>
+        <h3>The adaptive-therapy insight</h3>
+        <p>Hitting a tumor as hard as possible wipes out the sensitive cells that were keeping the resistant ones in check. Our full 3D simulation found the same thing: making chemo 50% stronger made resistance take over <b>74–85 days into treatment</b> in a scenario where it otherwise never did.</p>
+        <p style="margin-top:10px">That's the reasoning behind adaptive therapy, which doses to <i>control</i> a tumor rather than eradicate it. It has been tested in prostate cancer patients (Zhang et al., 2017).</p>
+        <p style="margin-top:10px"><a href="model.html#sensitivity">See the sensitivity analysis →</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="bottles">
+    <div class="sec-tag">// pill bottles</div>
+    <h2 class="sec-title reveal">One bottle, one color, one treatment</h2>
+    <p class="sec-lede reveal">The console has eight color-coded RFID pill bottles. On screen, a cell that <b>resists</b> a treatment glows in that bottle's color. Put the red bottle on the reader, and if the tumor slowly fills with red, those are doxorubicin-resistant cells taking over. A cell that resists several treatments shows the color of the one you're using right now.</p>
+    <div class="grid g4"><div class="card tech reveal bottle-card"><div class="bottle-swatch" style="background:#e5383b"></div><div class="card-id">key 1 · red bottle</div><h3>Doxorubicin</h3><p><b>Resisted by:</b> RCH or the drug pump (EFX)</p><p class="muted small">Why red: doxorubicin really is red, nicknamed the &quot;red devil&quot;.</p></div><div class="card tech reveal bottle-card"><div class="bottle-swatch" style="background:#141518"></div><div class="card-id">key 2 · black bottle</div><h3>Photofrin (porfimer)</h3><p><b>Resisted by:</b> RCH</p><p class="muted small">Why black: patients have to stay out of bright light afterward.</p></div><div class="card tech reveal bottle-card"><div class="bottle-swatch" style="background:#ff8c1a"></div><div class="card-id">key 3 · orange bottle</div><h3>Goserelin</h3><p><b>Resisted by:</b> target escape (RTA)</p><p class="muted small">Why orange: hormone therapy.</p></div><div class="card tech reveal bottle-card"><div class="bottle-swatch" style="background:#ff6fb5"></div><div class="card-id">key 4 · pink bottle</div><h3>Enhertu</h3><p><b>Resisted by:</b> RTA or the drug pump (EFX)</p><p class="muted small">Why pink: it's for HER2 breast cancer (pink ribbon).</p></div><div class="card tech reveal bottle-card"><div class="bottle-swatch" style="background:#ffd60a"></div><div class="card-id">key 5 · yellow bottle</div><h3>Radiation</h3><p><b>Resisted by:</b> better DNA repair (RAD)</p><p class="muted small">Why yellow: the radiation warning sign.</p></div><div class="card tech reveal bottle-card"><div class="bottle-swatch" style="background:#2ecc71"></div><div class="card-id">key 6 · green bottle</div><h3>Pembrolizumab</h3><p><b>Resisted by:</b> immune escape (IMM)</p><p class="muted small">Why green: a green light for T cells.</p></div><div class="card tech reveal bottle-card"><div class="bottle-swatch" style="background:#9aa0a6"></div><div class="card-id">key 7 · grey bottle</div><h3>Carboplatin</h3><p><b>Resisted by:</b> RCH</p><p class="muted small">Why grey: platinum is a grey metal.</p></div><div class="card tech reveal bottle-card"><div class="bottle-swatch" style="background:#f4f4f4"></div><div class="card-id">key 8 · white bottle</div><h3>Paclitaxel</h3><p><b>Resisted by:</b> RCH or the drug pump (EFX)</p><p class="muted small">Why white: it comes from the pale bark of the yew tree.</p></div></div>
+    <p class="muted small reveal" style="margin-top:16px">Cells that aren't resistant use colors that are never bottle colors: <span class="sw" style="background:#3d7eff"></span>dividing &nbsp; <span class="sw" style="background:#284a86"></span>resting (low oxygen) &nbsp; <span class="sw" style="background:#22d3ee"></span>persister &nbsp; <span class="sw" style="background:#a78bfa"></span>radiation-doomed &nbsp; <span class="sw" style="background:#5a463a"></span>dead.</p>
+  </section>
+
+  <section class="section band" style="max-width:none"><div style="max-width:1400px;margin:0 auto">
+    <div class="sec-tag">// 04 · treatments</div>
+    <h2 class="sec-title reveal">How each treatment kills</h2>
+    <div class="gap-grid g2">
+      <div class="card chart-card tech reveal "><h3>Dose-response (Hill curve)</h3><div class="sub">Kill rate vs local drug level. Resistant cells need many times more drug; GDSC cell-line data puts that fold at 8–19× for our chemo drugs.</div><div class="ctrl-row">resistance fold: <input type="range" id="hillF" min="1" max="20" step="0.5" value="13.7"> <b id="hillFv">13.7×</b> &nbsp; Hill exponent: <input type="range" id="hillN" min="0.5" max="4" step="0.1" value="2"> <b id="hillNv">2.0</b></div><div id="ch-hill"></div></div>
+      <div class="card chart-card tech reveal "><h3>Radiation: the linear-quadratic model</h3><div class="sub">Fraction of cells surviving one dose. Cells without oxygen are about 3× harder to kill, which is why the starved core survives.</div><div class="ctrl-row">α: <input type="range" id="lqA" min="0.1" max="0.6" step="0.01" value="0.3"> <b id="lqAv">0.30</b> &nbsp; α/β: <b id="lqAB">10 Gy</b></div><div id="ch-lq"></div></div>
+    </div>
+    <div class="grid g3" style="margin-top:22px">
+      <div class="card tech reveal"><div class="icon-tile"><svg viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="6" rx="3" transform="rotate(-35 12 12)"/><path d="M9 7l6 9"/></svg></div><h3>Chemo + persisters</h3><p>Carboplatin, doxorubicin and paclitaxel kill on a Hill curve, weaker on resting cells. Under drug pressure, a few cells switch into a reversible drug-tolerant 'persister' state without any mutation (Sharma 2010).</p></div>
+      <div class="card tech reveal"><div class="icon-tile"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></div><h3>Enhertu (antibody-drug conjugate)</h3><p>The antibody barely gets past a few cell layers, but its released payload spreads further (the bystander effect). Each cell feels whichever is stronger.</p></div>
+      <div class="card tech reveal"><div class="icon-tile"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-4 8-8 9-4-1-8-4-8-9V6z"/></svg></div><h3>Pembrolizumab</h3><p>Releases the brakes on T cells, which diffuse in from the edge. Tumors with more mutations are easier to see (Samstein 2019). Immune-escape clones are invisible.</p></div>
+      <div class="card tech reveal"><div class="icon-tile"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/></svg></div><h3>Photofrin + laser</h3><p>The drug does nothing until the laser switches on, 2 days after injection, and it only kills where there's oxygen.</p></div>
+      <div class="card tech reveal"><div class="icon-tile"><svg viewBox="0 0 24 24"><path d="M12 3s6 7 6 11a6 6 0 0 1-12 0c0-4 6-11 6-11z"/></svg></div><h3>Goserelin</h3><p>Shuts off hormone signaling, so it only works on hormone-driven cancers like prostate and some breast tumors. Target-escape cells shrug it off.</p></div>
+      <div class="card tech reveal"><div class="icon-tile"><svg viewBox="0 0 24 24"><path d="M2 12c2-4 4-4 6 0s4 4 6 0 4-4 6 0"/></svg></div><h3>Radiation</h3><p>Fractionated doses (e.g. 2 Gy × 30). Doomed cells die over the next ~30 hours, not instantly, just like real mitotic catastrophe.</p></div>
+    </div>
+  </div></section>
+
+  <section class="section">
+    <div class="sec-tag">// 05 · honesty</div>
+    <h2 class="sec-title reveal">Every number is labeled</h2>
+    <p class="sec-lede reveal">Some numbers come from papers, some from our own fits, and some are still placeholders. The code labels every one, so you always know which is which.</p>
+    <div class="grid g3">
+      <div class="card tech reveal"><span class="label-chip chip-sourced">SOURCED</span><span class="label-chip chip-sourced">RAYNE</span><p style="margin-top:12px">Straight from a paper, a drug label, or Rayne's research sheet. Examples: penetration depths, half-lives, side-effect rates, cancer statistics.</p></div>
+      <div class="card tech reveal"><span class="label-chip chip-proxy">FIT</span><span class="label-chip chip-proxy">PROXY</span><p style="margin-top:12px">Fitted to a measurement, or borrowed from a close relative. Examples: GDSC resistance folds (cisplatin for carboplatin), consumption rates fitted to measured depths.</p></div>
+      <div class="card tech reveal"><span class="label-chip chip-estimate">ESTIMATE</span><span class="label-chip chip-dummy">DUMMY</span><p style="margin-top:12px">Our best guess from a range, or a placeholder. Example: most drug kill rates. The sensitivity analysis tells us which of these matter most.</p></div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-grid">
+      <div>
+        <div class="brand">ONCOSPHERE</div>
+        <p class="muted small" style="max-width:420px;margin-top:10px">A 3D tumor evolution and treatment-resistance simulator with a machine-learning forecast and a color-coded pill-bottle console. Built at HackUMass by Hope, Isabella, Rayne and Katla. Educational project, not medical advice.</p>
+      </div>
+      <div><h4>Pages</h4><ul><li><a href="index.html">Home</a></li><li><a href="simulator.html">Simulate</a></li><li><a href="science.html">Science</a></li><li><a href="model.html">Model</a></li><li><a href="impact.html">Impact</a></li><li><a href="research.html">Research</a></li><li><a href="ledwall.html">LED Wall</a></li></ul></div>
+      <div><h4>Built with</h4><ul>
+        <li><a href="https://threejs.org" target="_blank" rel="noopener">Three.js</a></li>
+        <li><a href="https://www.cancerrxgene.org" target="_blank" rel="noopener">GDSC</a> + <a href="https://www.cbioportal.org" target="_blank" rel="noopener">cBioPortal</a></li>
+        <li><a href="https://scikit-learn.org" target="_blank" rel="noopener">scikit-learn</a></li>
+        <li><a href="https://www.tooplate.com" target="_blank" rel="noopener">Tooplate templates</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 OncoSphere · HackUMass</span><span>oncosphere.health</span></div>
+  </footer>
+</main>
+<script src="data/sitedata.js"></script>
+<script src="charts.js"></script>
+<script src="site.js"></script>
+<script>
+(function () {
+  const C = OncoCharts, P = C.palette, D = window.SITE_DATA || {};
+  const $ = (id) => document.getElementById(id);
+  const R = 20;
+  const prof = (L) => { const pts = []; for (let d = 0; d <= R - 0.5; d += 0.5) { const r = R - d; pts.push([d, (R * Math.sinh(r / L)) / (r * Math.sinh(R / L))]); } return pts; };
+  function drawO2() {
+    const L = +$("o2L").value; $("o2Lv").textContent = L + " cells (" + Math.round(L * 20) + " µm)";
+    C.line("#ch-o2", { height: 320, x: { label: "depth from the edge (cells, 20 µm each)", domain: [0, 19.5] }, y: { label: "level (1 = at the vessels)", domain: [0, 1.02], ticks: [0, 0.25, 0.5, 0.75, 1], tipFmt: (v) => C.fmt(v * 100) + "%" },
+      series: [{ name: "oxygen (L = 3)", color: P.blue, pts: prof(3) }, { name: "your drug (L = " + L + ")", color: P.orange, pts: prof(L) }],
+      refs: [{ y: 0.1, label: "cells go dormant below ~10%" }], directLabels: false, animate: false });
+  }
+  $("o2L").oninput = drawO2; drawO2();
+  if (D.penetration) C.barH("#ch-pen", { left: 200, xLabel: "penetration length (µm)", valueFmt: (v) => C.fmt(v) + " µm",
+    items: D.penetration.slice().sort((a, b) => b.um - a.um).map((d) => ({ label: d.name.replace(/ \(.*\)/, ""), value: d.um,
+      color: d.Deff ? P.blue : P.yellow, note: d.Deff ? `D_eff ${d.Deff} µm²/s · k ${d.k}/s` : "no measured D/k, estimate" })),
+    legend: [{ name: "from measured D_eff and k", color: P.blue }, { name: "estimate", color: P.yellow }] });
+  function drawEvo() {
+    const kk = +$("evoK").value, cost = +$("evoC").value;
+    $("evoKv").textContent = kk.toFixed(2) + "×"; $("evoCv").textContent = Math.round(cost * 100) + "%";
+    let S = 0.999, Rr = 0.001; const r = 0.25, Kc = 1, dt = 0.25, S1 = [], R1 = [];
+    for (let t = 0; t <= 300; t += dt) {
+      const since = t % 21, drug = since < 3 ? kk * 0.9 : 0;
+      const crowd = 1 - (S + Rr) / Kc;
+      S += dt * (r * S * crowd - drug * S); Rr += dt * (r * (1 - cost) * Rr * crowd);
+      S = Math.max(S, 1e-6); Rr = Math.max(Rr, 1e-6);
+      if (Math.abs(t - Math.round(t)) < 1e-9 && Math.round(t) % 3 === 0) { S1.push([t, S]); R1.push([t, Rr]); }
+    }
+    let take = null; for (let i = 0; i < S1.length; i++) if (R1[i][1] > S1[i][1]) { take = S1[i][0]; break; }
+    C.line("#ch-evo", { height: 320, x: { label: "days", domain: [0, 300] }, y: { label: "share of space (log)", log: true, domain: [1e-4, 1.2], fmt: (v) => v >= 1 ? "1" : v.toExponential(0), tipFmt: (v) => C.fmt(v * 100, 2) + "%" },
+      series: [{ name: "sensitive", color: P.blue, pts: S1 }, { name: "resistant", color: P.orange, pts: R1 }],
+      refs: take ? [{ x: take, label: "resistant > sensitive: day " + take, color: P.orange }] : [], animate: false });
+  }
+  $("evoK").oninput = $("evoC").oninput = drawEvo; drawEvo();
+  function drawHill() {
+    const F = +$("hillF").value, n = +$("hillN").value; $("hillFv").textContent = F + "×"; $("hillNv").textContent = n.toFixed(1);
+    const ec = 0.22, a = [], b = [];
+    for (let k = 0; k <= 60; k++) { const c = Math.pow(10, -2 + k * 0.05); a.push([c, 1 / (1 + Math.pow(ec / c, n))]); b.push([c, 1 / (1 + Math.pow((ec * F) / c, n))]); }
+    C.line("#ch-hill", { height: 320, x: { label: "local drug level (1 = peak at the vessels)", log: true, domain: [0.01, 10], fmt: (v) => v < 1 ? v : C.fmt(v) }, y: { label: "fraction of max kill rate", domain: [0, 1.02], ticks: [0, 0.25, 0.5, 0.75, 1], tipFmt: (v) => C.fmt(v * 100) + "%" },
+      series: [{ name: "sensitive cell", color: P.blue, pts: a }, { name: "resistant cell", color: P.orange, pts: b }], refs: [{ x: 1, label: "peak dose" }], animate: false });
+  }
+  $("hillF").oninput = $("hillN").oninput = drawHill; drawHill();
+  function drawLQ() {
+    const al = +$("lqA").value, be = 0.03; $("lqAv").textContent = al.toFixed(2); $("lqAB").textContent = C.fmt(al / be, 0) + " Gy";
+    const ox = [], hy = [];
+    for (let d = 0; d <= 10; d += 0.25) { ox.push([d, Math.exp(-al * d - be * d * d)]); const e = d / 3; hy.push([d, Math.exp(-al * e - be * e * e)]); }
+    C.line("#ch-lq", { height: 320, x: { label: "dose in one go (Gy)", domain: [0, 10] }, y: { label: "surviving fraction (log)", log: true, domain: [0.001, 1.05], fmt: (v) => v >= 1 ? "1" : v, tipFmt: (v) => C.fmt(v * 100, 1) + "%" },
+      series: [{ name: "with oxygen", color: P.blue, pts: ox }, { name: "no oxygen (3× harder)", color: P.aqua, pts: hy }], refs: [{ x: 2, label: "standard 2 Gy fraction" }], animate: false });
+  }
+  $("lqA").oninput = drawLQ; drawLQ();
+})();
+</script>
+<script type="module" src="site3d.js"></script>
+</body>
+</html>

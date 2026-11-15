@@ -1,438 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OncoSphere - 3D Tumor Simulation</title>
-    <script type="importmap">
-{ "imports": { "three": "./vendor/three.module.js", "three/addons/": "./vendor/" } }
-</script>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
-    <link href="style.css" rel="stylesheet">
-
-    <!--
-
-Tooplate 2145 Eco Lume
-
-https://www.tooplate.com/view/2145-eco-lume
-
-Free HTML CSS Template
-
--->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home · OncoSphere</title>
+<meta name="description" content="OncoSphere: a 3D tumor evolution and treatment-resistance simulator with an ML forecast.">
+<script type="importmap">{ "imports": { "three": "./vendor/three.module.js", "three/addons/": "./vendor/" } }</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Chakra+Petch:wght@400;500;600;700&family=Exo+2:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%2300f0ff%27 stroke-width=%271.6%27%3E%3Ccircle cx=%2712%27 cy=%2712%27 r=%279%27/%3E%3Cellipse cx=%2712%27 cy=%2712%27 rx=%279%27 ry=%273.6%27/%3E%3Ccircle cx=%2715.5%27 cy=%279%27 r=%272%27 fill=%27%23f07a3d%27 stroke=%27none%27/%3E%3C/svg%3E">
+<!-- design mixes three free Tooplate templates: 2165 Neon Carbon, 2144 Parallax Depth, 2145 Eco Lume (tooplate.com) -->
 </head>
+<body data-page="index.html">
+<div class="stars"></div><div class="bg-grid"></div><div class="particles"></div><div class="mouse-ring"></div>
 
-<body>
-    <!-- Background Elements -->
-    <div class="bio-bg"></div>
-    <div class="organic-shapes">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
+<aside class="sidebar" aria-label="Main navigation">
+  <a href="index.html" class="brand-mark" title="OncoSphere"><svg viewBox="0 0 24 24" fill="none" stroke="#00f0ff" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="9" ry="3.6"/><ellipse cx="12" cy="12" rx="3.6" ry="9"/><circle cx="15.5" cy="9" r="1.6" fill="#f07a3d" stroke="none"/></svg></a>
+  <nav class="side-links">
+      <a href="index.html" class="side-link active" title="Home"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg><span>Home</span></a>
+      <a href="simulator.html" class="side-link" title="Simulate"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="9" ry="3.5"/><path d="M12 3v18"/></svg><span>Simulate</span></a>
+      <a href="science.html" class="side-link" title="Science"><svg viewBox="0 0 24 24"><path d="M9 3h6"/><path d="M10 3v6L4 20h16l-6-11V3"/></svg><span>Science</span></a>
+      <a href="model.html" class="side-link" title="Model"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/><path d="M12 7v4M12 11l-6 5M12 11l6 5"/></svg><span>Model</span></a>
+      <a href="impact.html" class="side-link" title="Impact"><svg viewBox="0 0 24 24"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg><span>Impact</span></a>
+      <a href="research.html" class="side-link" title="Research"><svg viewBox="0 0 24 24"><path d="M4 4h6a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H4z"/><path d="M20 4h-6a3 3 0 0 0-3 3v13a2 2 0 0 1 2-2h7z"/></svg><span>Research</span></a>
+  </nav>
+  <div class="side-status"><div class="lbl">SIM</div><div class="on">ONLINE</div><div class="clock">T+00:00</div></div>
+</aside>
+<button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+<nav class="mobile-nav" aria-label="Mobile navigation">
+  <a href="index.html">Home</a>
+  <a href="simulator.html">Simulate</a>
+  <a href="science.html">Science</a>
+  <a href="model.html">Model</a>
+  <a href="impact.html">Impact</a>
+  <a href="research.html">Research</a>
+</nav>
+
+<main class="main">
+  <header class="hud">
+    <div class="hud-title">OncoSphere</div>
+    <div class="hud-crumb"><b>&gt;</b> home <b>&gt;</b> overview</div>
+    <div class="hud-stats"><div class="hud-stat">CELLS <b>35,880</b></div><div class="hud-div"></div><div class="hud-stat">STEP <b>4 h</b></div><div class="hud-div"></div><div class="hud-stat hide-md">MODEL ERR <b>13.4 d</b></div><div class="hud-div"></div><div class="hud-stat hide-md">COVERAGE <b>78%</b></div></div>
+  </header>
+
+  <section class="hero">
+    <div class="layer layer-glow" data-speed="0.12"></div>
+    <div class="layer" data-speed="0.3">
+      <div class="rects bl"><div class="rect" style="width:84px;height:54px"></div><div class="rect" style="width:110px;height:66px"></div><div class="rect" style="width:92px;height:72px"></div><div class="rect" style="width:104px;height:48px"></div><div class="rect" style="width:78px;height:60px"></div><div class="rect" style="width:116px;height:78px"></div></div>
+      <div class="rects tr"><div class="rect" style="width:78px;height:68px"></div><div class="rect" style="width:98px;height:52px"></div><div class="rect" style="width:72px;height:62px"></div><div class="rect" style="width:88px;height:48px"></div></div>
     </div>
-    <div class="particle-system" id="particleSystem"></div>
+    <div class="layer" data-speed="0.5"><div class="orb" style="top:18%"></div><div class="orb two"></div></div>
+    <div class="hero-copy reveal">
+      <div class="tag">// HackUMass 2026 · tumor evolution simulator</div>
+      <h1 class="mega">ONCO<br>SPHERE</h1>
+      <p class="lede">Witness a tumor grow cell by cell in 3D, treat it, and watch resistant cells evolve, then let a machine-learning model forecast when resistance wins, with uncertainty.</p>
+      <div class="cta-row"><a href="simulator.html" class="btn btn-primary">Launch simulator</a><a href="science.html" class="btn btn-ghost">How it works</a><a href="model.html" class="btn btn-ghost">See the results</a></div>
+    </div>
+    <div class="hero-visual">
+      <div class="orbit-ring"></div><div class="orbit-ring r2"></div>
+      <canvas data-scene="tumor" aria-label="3D animation"></canvas>
+      <div class="visual-label" style="top:16%;left:4%">SENSITIVE CELLS</div><div class="visual-label" style="top:30%;right:2%;border-color:#f07a3d;color:#f07a3d">RESISTANT CLONE</div><div class="visual-label" style="bottom:20%;left:8%;border-color:#d36bd8;color:#d36bd8">PERSISTERS</div><div class="visual-label" style="bottom:12%;right:8%">DRUG FRONT</div>
+    </div>
+    <a href="#start" class="next-btn" aria-label="Scroll down"><div class="pyramid"><div class="pyr-face"></div><div class="pyr-face"></div><div class="pyr-face"></div><div class="pyr-face"></div></div></a>
+  </section>
+  <div id="start"></div>
+  <div class="stats reveal">
+    <div class="stat"><div class="n" data-count="35880">0</div><div class="l">cells in a 3D lattice</div></div>
+    <div class="stat"><div class="n" data-count="10">0</div><div class="l">cancer types</div></div>
+    <div class="stat"><div class="n" data-count="15">0</div><div class="l">real treatment regimens</div></div>
+    <div class="stat"><div class="n" data-count="1200">0</div><div class="l">virtual patients trained on</div></div>
+  </div>
 
-    <!-- Navigation -->
-    <nav id="navbar">
-        <div class="nav-container">
-            <a href="#home" class="logo">
-                <div class="logo-icon"></div>
-                <span class="logo-text">OncoSphere</span>
-            </a>
-            <!--<ul class="nav-menu" id="navMenu">-->
-            <!--    <li><a href="#home" class="nav-link active">Home</a></li>-->
-            <!--    <li><a href="#about" class="nav-link">About Us</a></li>-->
-            <!--    <li><a href="#features" class="nav-link">How to Use</a></li>-->
-            <!--</ul>-->
-            <div class="menu-toggle" id="menuToggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+  <section class="section">
+    <div class="sec-tag">// pipeline</div>
+    <h2 class="sec-title reveal">How it works</h2>
+    <p class="sec-lede reveal">Each of our five steps uses data derived from experimentation or calculation in health literature where we could find it, and every number we calculated ourselves as amateurs is labeled in the code.</p>
+    <div class="steps reveal">
+      <div class="step"><h4>Grow</h4><p>36,000-site lattice, 20 µm per cell, 4 hours per step, cells divide into free space.</p></div>
+      <div class="step"><h4>Feed</h4><p>Oxygen and each drug soak in from the blood supply (we use the reaction-diffusion model). The core starves of oxygen and dies out, but drugs also can't penetrate that far.</p></div>
+      <div class="step"><h4>Mutate</h4><p>8 traits, from faster growth to drug pumps to hiding from T cells</p></div>
+      <div class="step"><h4>Treat</h4><p>Chemo, hormones, an antibody-drug conjugate, immunotherapy, light therapy and radiation</p></div>
+      <div class="step"><h4>Forecast</h4><p>After 3 weeks of treatment, a model trained on 1200 runs predicts if and when resistance will eventually take over.</p></div>
+    </div>
+  </section>
+
+  <section class="section band" style="max-width:none">
+    <div style="max-width:1400px;margin:0 auto">
+    <div class="sec-tag">// inside the sphere</div>
+    <h2 class="sec-title reveal">What you can do with it</h2>
+    <div class="carousel-wrap">
+      <div class="carousel">
+        <div class="c-card"><span class="num">01</span><div class="icon-tile"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="9" ry="3.5"/><path d="M12 3v18"/></svg></div><h3>Live 3D tumor</h3><p>Orbit, slice and recolor 36,000 cells by resistance, oxygen, drug level or clone family.</p></div>
+        <div class="c-card"><span class="num">02</span><div class="icon-tile"><svg viewBox="0 0 24 24"><path d="M7 3c0 6 10 6 10 12s-10 6-10 6"/><path d="M17 3c0 6-10 6-10 12"/><path d="M8 7h8M8 17h8"/></svg></div><h3>Evolution on screen</h3><p>Treatment kills sensitive cells and resistant clones take over in their place.</p></div>
+        <div class="c-card"><span class="num">03</span><div class="icon-tile"><svg viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="6" rx="3" transform="rotate(-35 12 12)"/><path d="M9 7l6 9"/></svg></div><h3>Treatment regimens</h3><p>15 schedules from carboplatin every 21 days to 60 Gy radiation, with doses that rise and fall by half-life.</p></div>
+        <div class="c-card"><span class="num">04</span><div class="icon-tile"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/><path d="M12 7v4M12 11l-6 5M12 11l6 5"/></svg></div><h3>ML forecast</h3><p>Gradient-boosted trees plus conformal calibration: a point of no return day apprximation with a range that is accurate 80% of the time.</p></div>
+        <div class="c-card"><span class="num">05</span><div class="icon-tile"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18"/><circle cx="8" cy="8" r="1"/><circle cx="12" cy="8" r="1"/><circle cx="16" cy="8" r="1"/><circle cx="8" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="16" cy="12" r="1"/><circle cx="8" cy="16" r="1"/><circle cx="12" cy="16" r="1"/><circle cx="16" cy="16" r="1"/></svg></div><h3>LED tumor wall Recreation</h3><p>Five 16×16 LED panels show live slices of the sphere in memory of a physical model we built that we had to abandon due to a faulty adapter.</p></div>
+        <div class="c-card"><span class="num">06</span><div class="icon-tile"><svg viewBox="0 0 24 24"><path d="M8 12V5a1.5 1.5 0 0 1 3 0v6"/><path d="M11 11V4a1.5 1.5 0 0 1 3 0v7"/><path d="M14 11V6a1.5 1.5 0 0 1 3 0v8a6 6 0 0 1-6 6h-1a6 6 0 0 1-5-3l-2-4a1.5 1.5 0 0 1 2.5-1.5L8 13"/></svg></div><h3>Pill-bottle console</h3><p>Put an RFID-tagged bottle on the reader, turn the dose and time dials, press go. No mouse needed.</p></div>
+      </div>
+      <div class="c-controls"><div class="c-btn c-prev">◀</div><div class="c-dots"></div><div class="c-btn c-next">▶</div></div>
+    </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="gap-grid g2" style="align-items:stretch">
+      <div class="reveal">
+        <div class="sec-tag">// under the hood</div>
+        <h2 class="sec-title">From physics to prediction</h2>
+        <div class="prose">
+          <p>Every simulated patient is different: mutation rate, growth speed, drug, radiation and immune strength are drawn at random. We ran <strong>1200 of them</strong> through 15 regimens and 10 cancers, then trained a model on only what a doctor could see: the tumor's size during the first three weeks.</p>
+          <p>The result is off by <strong>13.4 days</strong> on runs it never saw, against 22.9 days for the best guess without ML. Its ranges are calibrated, so an "80% range" contains the true day 78% of the time.</p>
+          <p><a href="model.html">See every chart →</a></p>
         </div>
-    </nav>
+      </div>
+      <div class="terminal tech reveal">
+        <div class="term-bar"><i></i><i></i><i></i><span>oncosphere — bash</span></div>
+        <div class="term-body" data-lines='[["p", "$ node batch.mjs --runs 1200"], ["", "1200 done | takeover 396 \u00b7 not_by_180 675 \u00b7 eradicated 129"], ["p", "$ python3 surrogate/train.py runs.jsonl"], ["", "outcome accuracy ........ 89%"], ["", "takeover-day error ...... 13.4 days  (no-ML guess 22.9)"], ["warn", "80% interval coverage ... 49% raw  ->  conformal fix"], ["ok", "80% interval coverage ... 78% after calibration"], ["p", "$ node surrogate/check-parity.mjs"], ["ok", "JS surrogate matches python (max diff 2e-8)"], ["p", "$ npm test"], ["ok", "10/10 test files passed"]]'></div>
+      </div>
+    </div>
+  </section>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="hero-content">
-            <div class="hero-text">
-                <h1>Welcome to OncoSphere!</h1>
-                <p>Visualize tumor growth, mutation, and treatment resistance with our 3D tumor simulation.</p>
-                <div class="hero-buttons">
-                    <a href="#features" class="btn btn-primary">
-                        ℹ️ About Us
-                    </a>
-                    <a href="#about" class="btn btn-secondary">
-                        📖 How to Use
-                    </a>
-                </div>
-            </div>
-            <!--<div class="hero-visual">-->
-            <!--    <div class="bio-sphere">-->
-            <!--        <div class="rotating-text">-->
-            <!--            <div class="text-circle active">BIO • TECH</div>-->
-            <!--            <div class="text-circle">ECO • FUTURE</div>-->
-            <!--            <div class="text-circle">GREEN • INNOVATION</div>-->
-            <!--        </div>-->
-            <!--    </div>-->
-            <!--</div>-->
-        </div>
-    </section>
+  <section class="section tight">
+    <div class="sec-tag">// explore</div>
+    <h2 class="sec-title reveal">Go deeper</h2>
+    <div class="grid g4" style="margin-top:20px">
+      <a class="card tech reveal" href="science.html" style="color:inherit"><div class="icon-tile"><svg viewBox="0 0 24 24"><path d="M9 3h6"/><path d="M10 3v6L4 20h16l-6-11V3"/></svg></div><h3>The science</h3><p>Diffusion, evolution, dose-response and radiobiology, with live interactive plots.</p></a>
+      <a class="card tech reveal" href="model.html" style="color:inherit"><div class="icon-tile"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/><path d="M12 7v4M12 11l-6 5M12 11l6 5"/></svg></div><h3>Model &amp; results</h3><p>Accuracy, calibration, what the model relies on, and which numbers matter most.</p></a>
+      <a class="card tech reveal" href="impact.html" style="color:inherit"><div class="icon-tile"><svg viewBox="0 0 24 24"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg></div><h3>Impact</h3><p>Who this helps: patients, students, researchers and classrooms anywhere.</p></a>
+      <a class="card tech reveal" href="research.html" style="color:inherit"><div class="icon-tile"><svg viewBox="0 0 24 24"><path d="M4 4h6a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H4z"/><path d="M20 4h-6a3 3 0 0 0-3 3v13a2 2 0 0 1 2-2h7z"/></svg></div><h3>Research &amp; sources</h3><p>The math we derived, the data we pulled, and every paper behind the numbers.</p></a>
+    </div>
+  </section>
 
-    <!-- Stats Section -->
-    <!--<section class="stats">-->
-    <!--    <div class="stats-container">-->
-    <!--        <div class="stat-item">-->
-    <!--            <h3>98%</h3>-->
-    <!--            <p>Energy Efficiency</p>-->
-    <!--        </div>-->
-    <!--        <div class="stat-item">-->
-    <!--            <h3>2.5M+</h3>-->
-    <!--            <p>Carbon Tons Saved</p>-->
-    <!--        </div>-->
-    <!--        <div class="stat-item">-->
-    <!--            <h3>150+</h3>-->
-    <!--            <p>Partner Companies</p>-->
-    <!--        </div>-->
-    <!--        <div class="stat-item">-->
-    <!--            <h3>24/7</h3>-->
-    <!--            <p>Ecosystem Monitoring</p>-->
-    <!--        </div>-->
-    <!--    </div>-->
-    <!--</section>-->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div>
+        <div class="brand">ONCOSPHERE</div>
+        <p class="muted small" style="max-width:420px;margin-top:10px">A 3D tumor evolution and treatment-resistance simulator with a machine-learning forecast, an LED wall and a pill-bottle console. Built at HackUMass by Hope, Isabella, Rayne and Katla. Educational project, not medical advice.</p>
+      </div>
+      <div><h4>Pages</h4><ul><li><a href="index.html">Home</a></li><li><a href="simulator.html">Simulate</a></li><li><a href="science.html">Science</a></li><li><a href="model.html">Model</a></li><li><a href="impact.html">Impact</a></li><li><a href="research.html">Research</a></li></ul></div>
+      <div><h4>Built with</h4><ul>
+        <li><a href="https://threejs.org" target="_blank" rel="noopener">Three.js</a></li>
+        <li><a href="https://www.cancerrxgene.org" target="_blank" rel="noopener">GDSC</a> + <a href="https://www.cbioportal.org" target="_blank" rel="noopener">cBioPortal</a></li>
+        <li><a href="https://scikit-learn.org" target="_blank" rel="noopener">scikit-learn</a></li>
+        <li><a href="https://www.tooplate.com" target="_blank" rel="noopener">Tooplate templates</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 OncoSphere · HackUMass</span><span>oncosphere.health</span></div>
+  </footer>
+</main>
 
-    <!-- Features Section -->
-    <section class="features" id="features">
-        <h2 class="section-title">OncoSphere's 3D Tumor Vision Tool</h2>
-        <div class="features-showcase">
-            <table class="simulation-table">
-                <!-- Top row: Tumor visualization -->
-                <tr>
-                    <td colspan="6" class="view-cell">
-                        <canvas id="view" tabindex="0"></canvas>
-                    </td>
-                </tr>
+<script src="charts.js"></script>
+<script src="site.js"></script>
 
-                <!-- Bottom row: Controls -->
-                <tr class="controls-row">
-                    <td>
-                        <b id="day">Day 0</b>
-                        <p id="counts"></p>
-                        Cancer Type:
-                        <select id="cancer"></select>
-                        <button id="play" class="btn btn-secondary">Play/Pause</button>
-                        <button id="reset" class="btn btn-secondary">New Tumor</button>
-                        Speed:
-                        <input id="speed" type="range" min="0" max="6" step="1" value="1">
-                    </td>
-
-                    <td>
-                        Treatment Type:
-                        <select id="regimen"></select>
-                        <button id="treat" class="btn btn-secondary">Begin Treatment</button>
-                        <p id="prediction"></p>
-                    </td>
-
-                    <td>
-                        Color By:
-                        <select id="color">
-                            <option value="resistance">Resistance</option>
-                            <option value="clones">Clone</option>
-                        </select>
-                        <br>
-                        <label><input id="cut" type="checkbox"> Cutaway</label>
-                        <br>
-                        <label><input id="dead" type="checkbox" checked> Show Dead Cells</label>
-                        <br>
-                        <label><input id="rotate" type="checkbox" checked> Auto Rotate</label>
-                        <br>
-                        <button id="recenter">Reset Camera</button>
-                    </td>
-
-                    <td>
-                        <div id="leds">
-                            <b>LED Panels</b>
-                            <p>
-                                <button id="led-connect" class="btn btn-secondary">Connect LEDs</button>
-                                <br>
-                                <span id="led-status">Plug in Arduino, Hit Connect</span>
-                            </p>
-                            <canvas id="led-preview" width="300" height="80"></canvas>
-                            <div id="led-fps"></div>
-                            <details>
-                                <summary>Panel Setup</summary>
-                                <p>
-                                    Panels: <select id="led-panels">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                    </select><br>
-                                    Rotate: <select id="led-rotate">
-                                        <option value="0">0</option>
-                                        <option value="90">90</option>
-                                        <option value="180">180</option>
-                                        <option value="270">270</option>
-                                    </select><br>
-                                    <label><input id="led-serp" type="checkbox"> Zigzag Rows</label><br>
-                                    <label><input id="led-cols" type="checkbox"> Chain Goes Down Columns</label><br>
-                                    <label><input id="led-fx" type="checkbox"> Flip Left/Right</label><br>
-                                    <label><input id="led-fy" type="checkbox"> Flip Up/Down</label><br>
-                                    <label><input id="led-test" type="checkbox"> Test Pattern</label>
-                                </p>
-                                <p>Test Pattern: Top left led red, top row green, left column blue, panel 1 has 1 white
-                                    dot, panel 2 has 2, etc. Change settings until the real panels look like the
-                                    preview.</p>
-                            </details>
-                        </div>
-                    </td>
-
-                    <td>
-                        <p>
-                            Show: <select id="led-mode">
-                                <option value="auto">Auto</option>
-                                <option value="slices">Slices</option>
-                                <option value="view+slice">Front View + Slices</option>
-                            </select>
-                            <br>
-                            Zoom: <select id="led-zoom">
-                                <option value="fit">Fit Tumor</option>
-                                <option value="grow">Watch It Grow</option>
-                            </select>
-                            <br>
-                            Brightness: <input id="led-bright" type="range" min="0.1" max="1" step="0.05">
-                        </p>
-                    </td>
-                </tr>
-            </table>
-
-
-            <div class="feature-navigation">
-                <div class="nav-item active" data-feature="ecosystems">
-                    <!--<div class="nav-item-icon">🌿</div>-->
-                    <div class="nav-item-content">
-                        <h4>Controls</h4>
-                        <p>Drag to Rotate - Scroll to Zoom - Drag Right to Pan</p>
-                    </div>
-                </div>
-                <div class="nav-item" data-feature="circular">
-                    <div class="nav-item-icon">🔵️</div>
-                    <div class="nav-item-content">
-                        <h4>Blue</h4>
-                        <p>Sensitive</p>
-                    </div>
-                </div>
-                <div class="nav-item" data-feature="bioenergy">
-                    <div class="nav-item-icon">🟠</div>
-                    <div class="nav-item-content">
-                        <h4>Orange</h4>
-                        <p>Resistant</p>
-                    </div>
-                </div>
-                <div class="nav-item" data-feature="networks">
-                    <div class="nav-item-icon">🟣</div>
-                    <div class="nav-item-content">
-                        <h4>Purple</h4>
-                        <p>Persister</p>
-                    </div>
-                </div>
-                <div class="nav-item" data-feature="architecture">
-                    <div class="nav-item-icon">⚪</div>
-                    <div class="nav-item-content">
-                        <h4>Gray</h4>
-                        <p>Dormant</p>
-                    </div>
-                </div>
-                <div class="nav-item" data-feature="symbiosis">
-                    <div class="nav-item-icon">🟡</div>
-                    <div class="nav-item-content">
-                        <h4>Yellow</h4>
-                        <p>Hit By Radition</p>
-                    </div>
-                </div>
-                <div class="nav-item" data-feature="symbiosis">
-                    <div class="nav-item-icon">⚫️</div>
-                    <div class="nav-item-content">
-                        <h4>Dark</h4>
-                        <p>Dead</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section class="about" id="about">
-        <h2 class="section-title">About OncoSphere</h2>
-
-        <!-- First Row: Animation Left, Text Right -->
-        <!--<div class="about-content">-->
-        <!--    <div class="about-visual">-->
-        <!--        <div class="eco-visualization">-->
-        <!--            <div class="growth-rings">-->
-        <!--                <div class="ring"></div>-->
-        <!--                <div class="ring"></div>-->
-        <!--                <div class="ring"></div>-->
-        <!--            </div>-->
-        <!--        </div>-->
-        <!--    </div>-->
-        <!--    <div class="about-text">-->
-        <!--        <h2>Growing Tomorrow's Solutions</h2>-->
-        <!--        <p>EcoLume represents a paradigm shift in how we approach technology. By studying nature's 3.8 billion years of R&D, we've developed solutions that are not just sustainable, but regenerative.</p>-->
-        <!--        <p>Our bio-inspired systems don't just minimize environmental impact—they actively contribute to ecological restoration while delivering unprecedented performance and efficiency.</p>-->
-        <!--        <p>From neural networks inspired by mycelial connections to energy systems that mimic photosynthesis, we're building a future where technology and nature work in perfect harmony. Get organized and stay on track with <a href="https://timermo.com" rel="nofollow" target="_blank">TimerMo</a> today. Browse thousands of stunning vector stickers at <a href="https://www.vectorsticker.com" rel="nofollow" target="_blank">VectorSticker</a> to enhance your designs.</p>-->
-        <!--    </div>-->
-        <!--</div>-->
-
-        <!-- Second Row: Text Left, Animation Right -->
-        <div class="about-content">
-            <div class="about-text">
-                <h2>Innovation Through Biomimicry</h2>
-                <p>Our breakthrough approach combines cutting-edge biotechnology with advanced AI to create solutions
-                    that evolve and adapt like living organisms. Each system learns, grows, and improves over time.</p>
-                <p>We've pioneered revolutionary techniques in molecular computing, self-healing materials, and
-                    distributed intelligence networks that mirror the resilience and efficiency found in natural
-                    ecosystems.</p>
-                <p>Join us in redefining what's possible when human ingenuity meets nature's wisdom. Together, we're not
-                    just building technology—we're cultivating a sustainable future for generations to come.</p>
-            </div>
-            <div class="about-visual">
-                <div class="network-visualization">
-                    <div class="network-node"></div>
-                    <div class="network-node"></div>
-                    <div class="network-node"></div>
-                    <div class="network-node"></div>
-                    <div class="network-node"></div>
-                    <div class="network-connection connection-1"></div>
-                    <div class="network-connection connection-2"></div>
-                    <div class="network-connection connection-3"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section class="contact" id="contact">
-        <div class="contact-container">
-            <div class="contact-form">
-                <h2 class="section-title" style="text-align: left; margin-bottom: 40px; font-size: 2.5rem;">Let's Grow
-                    Together</h2>
-                <form id="contactForm">
-                    <div class="form-group">
-                        <label for="name">Full Name</label>
-                        <input type="text" id="name" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email Address</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="company">Company</label>
-                        <input type="text" id="company" name="company">
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea id="message" name="message" placeholder="Tell us about your sustainability goals..."
-                            required></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn">🌱 Send Message</button>
-                </form>
-            </div>
-            <div class="contact-info">
-                <h3>Connect With Nature</h3>
-                <div class="contact-item">
-                    <div class="contact-icon">📧</div>
-                    <div class="contact-details">
-                        <h4>Email</h4>
-                        <p>hello@ecolume.earth</p>
-                    </div>
-                </div>
-                <div class="contact-item">
-                    <div class="contact-icon">📱</div>
-                    <div class="contact-details">
-                        <h4>Phone</h4>
-                        <p>+1 (555) ECO-TECH</p>
-                    </div>
-                </div>
-                <div class="contact-item">
-                    <div class="contact-icon">🌍</div>
-                    <div class="contact-details">
-                        <h4>Location</h4>
-                        <p>Green Valley, CA 94043</p>
-                    </div>
-                </div>
-                <div class="contact-item">
-                    <div class="contact-icon">⏰</div>
-                    <div class="contact-details">
-                        <h4>Support</h4>
-                        <p>24/7 Global Coverage</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-brand">
-                <h3>OncoSphere</h3>
-                <p>Leading the bio-tech revolution with sustainable, nature-inspired solutions for a regenerative
-                    future.</p>
-                <div class="social-links">
-                    <a href="#" class="social-link">📘</a>
-                    <a href="#" class="social-link">🐦</a>
-                    <a href="#" class="social-link">💼</a>
-                    <a href="#" class="social-link">📸</a>
-                </div>
-            </div>
-            <div class="footer-section">
-                <h4>Solutions</h4>
-                <ul>
-                    <li><a href="#">Smart Ecosystems</a></li>
-                    <li><a href="#">Bio Energy</a></li>
-                    <li><a href="#">Circular Systems</a></li>
-                    <li><a href="#">Global Network</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>Resources</h4>
-                <ul>
-                    <li><a href="#">Documentation</a></li>
-                    <li><a href="#">Case Studies</a></li>
-                    <li><a href="#">Research Papers</a></li>
-                    <li><a href="#">API Reference</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>Company</h4>
-                <ul>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Careers</a></li>
-                    <li><a href="#">Press Kit</a></li>
-                    <li><a href="#">Contact</a></li>
-                </ul>
-            </div>
-        </div>
-    </footer>
-    <script>
-        function showError(html) { var e = document.getElementById("error"); e.innerHTML = html; e.hidden = false; }
-        if (location.protocol === "file:" && !window.ONCOSPHERE_STANDALONE) {
-            showError("this page needs a web server, it won't work if you just double click it (browsers block js modules on file://). Try running this on a server and try again.");
-        }
-        window.addEventListener("error", function (ev) {
-            var src = ev.filename ? " (" + ev.filename.split("/").slice(-2).join("/") + ":" + ev.lineno + ")" : "";
-            showError("error: " + ev.message + src + ". if a file failed to load, make sure the whole grid folder is there and you're using a server.");
-        });
-        setTimeout(function () {
-            if (!document.body.dataset.ready && document.getElementById("error").hidden)
-                showError("app didn't start after 15 seconds, check the console (F12).");
-        }, 15000);
-    </script>
-    <script type="module" src="./app.js"></script>
+<script type="module" src="site3d.js"></script>
 </body>
-
 </html>

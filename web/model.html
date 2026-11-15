@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Model & Results · OncoSphere</title>
+<meta name="description" content="How OncoSphere's surrogate model works and how well it predicts treatment resistance.">
+<script type="importmap">{ "imports": { "three": "./vendor/three.module.js", "three/addons/": "./vendor/" } }</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Chakra+Petch:wght@400;500;600;700&family=Exo+2:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%2300f0ff%27 stroke-width=%271.6%27%3E%3Ccircle cx=%2712%27 cy=%2712%27 r=%279%27/%3E%3Cellipse cx=%2712%27 cy=%2712%27 rx=%279%27 ry=%273.6%27/%3E%3Ccircle cx=%2715.5%27 cy=%279%27 r=%272%27 fill=%27%23f07a3d%27 stroke=%27none%27/%3E%3C/svg%3E">
+<!-- design mixes three free Tooplate templates: 2165 Neon Carbon, 2144 Parallax Depth, 2145 Eco Lume (tooplate.com) -->
+</head>
+<body data-page="model.html">
+<div class="stars"></div><div class="bg-grid"></div><div class="particles"></div><div class="mouse-ring"></div>
+
+<aside class="sidebar" aria-label="Main navigation">
+  <a href="index.html" class="brand-mark" title="OncoSphere"><svg viewBox="0 0 24 24" fill="none" stroke="#00f0ff" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="9" ry="3.6"/><ellipse cx="12" cy="12" rx="3.6" ry="9"/><circle cx="15.5" cy="9" r="1.6" fill="#f07a3d" stroke="none"/></svg></a>
+  <nav class="side-links">
+      <a href="index.html" class="side-link" title="Home"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg><span>Home</span></a>
+      <a href="simulator.html" class="side-link" title="Simulate"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="9" ry="3.5"/><path d="M12 3v18"/></svg><span>Simulate</span></a>
+      <a href="science.html" class="side-link" title="Science"><svg viewBox="0 0 24 24"><path d="M9 3h6"/><path d="M10 3v6L4 20h16l-6-11V3"/></svg><span>Science</span></a>
+      <a href="model.html" class="side-link active" title="Model"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/><path d="M12 7v4M12 11l-6 5M12 11l6 5"/></svg><span>Model</span></a>
+      <a href="impact.html" class="side-link" title="Impact"><svg viewBox="0 0 24 24"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg><span>Impact</span></a>
+      <a href="research.html" class="side-link" title="Research"><svg viewBox="0 0 24 24"><path d="M4 4h6a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H4z"/><path d="M20 4h-6a3 3 0 0 0-3 3v13a2 2 0 0 1 2-2h7z"/></svg><span>Research</span></a>
+      <a href="ledwall.html" class="side-link" title="LED Wall"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18"/><circle cx="8" cy="8" r="1"/><circle cx="12" cy="8" r="1"/><circle cx="16" cy="8" r="1"/><circle cx="8" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="16" cy="12" r="1"/><circle cx="8" cy="16" r="1"/><circle cx="12" cy="16" r="1"/><circle cx="16" cy="16" r="1"/></svg><span>LED Wall</span></a>
+  </nav>
+  <div class="side-status"><div class="lbl">SIM</div><div class="on">ONLINE</div><div class="clock">T+00:00</div></div>
+</aside>
+<button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+<nav class="mobile-nav" aria-label="Mobile navigation">
+  <a href="index.html">Home</a>
+  <a href="simulator.html">Simulate</a>
+  <a href="science.html">Science</a>
+  <a href="model.html">Model</a>
+  <a href="impact.html">Impact</a>
+  <a href="research.html">Research</a>
+  <a href="ledwall.html">LED Wall</a>
+</nav>
+
+<main class="main">
+  <header class="hud">
+    <div class="hud-title">OncoSphere</div>
+    <div class="hud-crumb"><b>&gt;</b> model <b>&gt;</b> results</div>
+    <div class="hud-stats"><div class="hud-stat">ACCURACY <b>89%</b></div><div class="hud-div"></div><div class="hud-stat">ERROR <b>13.4 d</b></div><div class="hud-div"></div><div class="hud-stat hide-md">80% HIT <b>78%</b></div><div class="hud-div"></div><div class="hud-stat hide-md">RUNS <b>1,200</b></div></div>
+  </header>
+
+  <section class="hero short">
+    <div class="layer layer-glow" data-speed="0.12"></div>
+    <div class="layer" data-speed="0.3">
+      <div class="rects bl"><div class="rect" style="width:84px;height:54px"></div><div class="rect" style="width:110px;height:66px"></div><div class="rect" style="width:92px;height:72px"></div><div class="rect" style="width:104px;height:48px"></div><div class="rect" style="width:78px;height:60px"></div><div class="rect" style="width:116px;height:78px"></div></div>
+      <div class="rects tr"><div class="rect" style="width:78px;height:68px"></div><div class="rect" style="width:98px;height:52px"></div><div class="rect" style="width:72px;height:62px"></div><div class="rect" style="width:88px;height:48px"></div></div>
+    </div>
+    <div class="layer" data-speed="0.5"><div class="orb" style="top:18%"></div><div class="orb two"></div></div>
+    <div class="hero-copy reveal">
+      <div class="tag">// surrogate model</div>
+      <h1 class="mega md">Model<br>&amp; results</h1>
+      <p class="lede">A forest of gradient-boosted trees learned from <strong>1200 simulated patients</strong>. Give it the first three weeks of tumor sizes and it predicts whether resistance takes over within 180 days, when, and how sure it is.</p>
+      <div class="cta-row"><a href="#metrics" class="btn btn-primary">See the numbers</a><a href="#sensitivity" class="btn btn-ghost">Sensitivity analysis</a></div>
+    </div>
+    <div class="hero-visual">
+      <div class="orbit-ring"></div><div class="orbit-ring r2"></div>
+      <canvas data-scene="forest" aria-label="3D animation"></canvas>
+      <div class="visual-label" style="top:12%;left:4%">A FEW OF THE 300 TREES</div><div class="visual-label" style="bottom:16%;right:4%;border-color:#ff2fd6;color:#ff2fd6">80% INTERVAL</div>
+    </div>
+    <a href="#start" class="next-btn" aria-label="Scroll down"><div class="pyramid"><div class="pyr-face"></div><div class="pyr-face"></div><div class="pyr-face"></div><div class="pyr-face"></div></div></a>
+  </section>
+  <div id="start"></div>
+  <div class="stats reveal" id="metrics">
+    <div class="stat"><div class="n" data-count="89" data-suffix="%">0</div><div class="l">outcome accuracy</div></div>
+    <div class="stat"><div class="n" data-count="13.4" data-dec="1" data-suffix=" d">0</div><div class="l">takeover-day error (no-ML guess: 22.9 d)</div></div>
+    <div class="stat"><div class="n" data-count="78" data-suffix="%">0</div><div class="l">of 80% ranges hit (was 49% before calibration)</div></div>
+    <div class="stat"><div class="n" data-count="0.068" data-dec="3">0</div><div class="l">Brier score for takeover risk (0 = perfect)</div></div>
+  </div>
+
+  <section class="section">
+    <div class="sec-tag">// pipeline</div>
+    <h2 class="sec-title reveal">From simulation to forecast</h2>
+    <div class="steps reveal">
+      <div class="step"><h4>Simulate</h4><p>1200 runs, random patients, 15 regimens, 10 cancers. 180 days each.</p></div>
+      <div class="step"><h4>Observe</h4><p>Only what a clinic could see: tumor size on days 0–21 of treatment, plus cancer, regimen, dose.</p></div>
+      <div class="step"><h4>Learn</h4><p>A gradient-boosted classifier (outcome) and quantile regressors (takeover day).</p></div>
+      <div class="step"><h4>Calibrate</h4><p>Conformalized quantile regression widens the ranges until they're honest.</p></div>
+      <div class="step"><h4>Ship</h4><p>Exported as JSON trees and run in the browser. Same answers as Python to 2×10⁻⁸.</p></div>
+    </div>
+  </section>
+
+  <section class="section band" style="max-width:none"><div style="max-width:1400px;margin:0 auto">
+    <div class="sec-tag">// accuracy</div>
+    <h2 class="sec-title reveal">How good is it?</h2>
+    <p class="sec-lede reveal">Everything below is measured on <b>held-out runs</b>: simulated patients the model never saw during training. Hover any chart for details.</p>
+    <div class="gap-grid g2">
+      <div class="card chart-card tech reveal "><h3>Predicted vs real takeover day</h3><div class="sub">68 held-out runs where resistance took over. Average error 13.4 days.</div><div id="ch-pred"></div></div>
+      <div class="gap-grid" style="gap:22px">
+        <div class="card chart-card tech reveal "><h3>Are the ranges honest?</h3><div class="sub">Share of held-out runs whose real day fell inside the range, vs the share the range claims.</div><div id="ch-cov"></div></div>
+        <div class="card chart-card tech reveal "><h3>Is the takeover risk calibrated?</h3><div class="sub">Predicted chance vs how often it happened. Brier score 0.068.</div><div id="ch-rel"></div></div>
+      </div>
+    </div>
+    <div class="gap-grid g2" style="margin-top:22px">
+      <div class="card chart-card tech reveal "><h3>What the model relies on</h3><div class="sub">How much worse the error gets when one input is scrambled (permutation importance).</div><div id="ch-imp"></div></div>
+      <div class="gap-grid" style="gap:22px">
+        <div class="card chart-card tech reveal "><h3>Outcome classifier</h3><div class="sub">Rows = what really happened, columns = prediction. 89% right.</div><div id="ch-conf"></div></div>
+        <div class="card chart-card tech reveal "><h3>More simulations, better forecasts</h3><div class="sub">Error on test runs vs how many training runs it learned from.</div><div id="ch-learn"></div></div>
+      </div>
+    </div>
+  </div></section>
+
+  <section class="section">
+    <div class="sec-tag">// the dataset</div>
+    <h2 class="sec-title reveal">What the simulations show</h2>
+    <div class="gap-grid g2">
+      <div class="card chart-card tech reveal "><h3>How fast resistance takes over</h3><div class="sub">Share of runs where resistance took over by each day, by kind of treatment.</div><div id="ch-cum"></div></div>
+      <div class="card chart-card tech reveal "><h3>The first three weeks already tell</h3><div class="sub">Median tumor size (10–90% band) during weeks 1–3, split by what happened later.</div><div id="ch-weeks"></div></div>
+    </div>
+    <div style="margin-top:22px"><div class="card chart-card tech reveal "><h3>Takeover day per regimen</h3><div class="sub">Each dot is one run where resistance took over. White bar = median. Right: % of runs it happened in.</div><div id="ch-reg"></div></div></div>
+  </section>
+
+  <section class="section band" id="sensitivity" style="max-width:none"><div style="max-width:1400px;margin:0 auto">
+    <div class="sec-tag">// sensitivity analysis</div>
+    <h2 class="sec-title reveal">Which numbers matter?</h2>
+    <p class="sec-lede reveal">We turned each of 13 parameters down 50% and up 50%, one at a time, in three scenarios, and compared against 25 baseline patients. Big bars point at the numbers most worth replacing with real data.</p>
+    <div class="card chart-card tech reveal "><h3>Change vs baseline</h3><div class="sub">Bars = average of 5 virtual patients per setting. Parameters that can't matter in a scenario show the noise level.</div><div class="ctrl-row"><span class="seg" id="sensScen"><button data-v="chemo" class="on">Chemo · breast</button><button data-v="immuno">Immuno · lung</button><button data-v="rt">Radiation · prostate</button></span><span class="seg" id="sensMet"><button data-v="takeover" class="on">takeover day</button><button data-v="size90">size at day 90</button></span></div><div id="ch-sens"></div></div>
+  </div></section>
+
+  <section class="section">
+    <div class="sec-tag">// strategy explorer</div>
+    <h2 class="sec-title reveal">Every treatment, same patients</h2>
+    <p class="sec-lede reveal">Each allowed regimen was run on the same 10 virtual patients. The line is the median; the band covers 10–90% of patients. That spread is the uncertainty a single run hides.</p>
+    <div class="card chart-card tech reveal "><h3>Tumor size over 180 days</h3><div class="sub">Relative to the size on day 0 (log scale). Pick up to three regimens to compare.</div><div class="ctrl-row">cancer: <select class="sel" id="stratCancer"></select> <span id="stratPick" style="display:flex;gap:8px;flex-wrap:wrap"></span></div><div id="ch-strat"></div></div>
+    <div class="grid g3" style="margin-top:22px">
+      <div class="card tech reveal"><div class="card-id">limit</div><h3>It learns the simulator</h3><p>The model predicts the simulation, not real patients. Its ranges cover patient-to-patient randomness, not the simulator being wrong.</p></div>
+      <div class="card tech reveal"><div class="card-id">limit</div><h3>Placeholder kill rates</h3><p>Most drug kill strengths are still estimates. The sensitivity analysis shows exactly which ones would change the answer.</p></div>
+      <div class="card tech reveal"><div class="card-id">next</div><h3>Validate on real curves</h3><p>Fit kill rates to published tumor response curves, then check forecasts against real patient size measurements.</p></div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-grid">
+      <div>
+        <div class="brand">ONCOSPHERE</div>
+        <p class="muted small" style="max-width:420px;margin-top:10px">A 3D tumor evolution and treatment-resistance simulator with a machine-learning forecast and a color-coded pill-bottle console. Built at HackUMass by Hope, Isabella, Rayne and Katla. Educational project, not medical advice.</p>
+      </div>
+      <div><h4>Pages</h4><ul><li><a href="index.html">Home</a></li><li><a href="simulator.html">Simulate</a></li><li><a href="science.html">Science</a></li><li><a href="model.html">Model</a></li><li><a href="impact.html">Impact</a></li><li><a href="research.html">Research</a></li><li><a href="ledwall.html">LED Wall</a></li></ul></div>
+      <div><h4>Built with</h4><ul>
+        <li><a href="https://threejs.org" target="_blank" rel="noopener">Three.js</a></li>
+        <li><a href="https://www.cancerrxgene.org" target="_blank" rel="noopener">GDSC</a> + <a href="https://www.cbioportal.org" target="_blank" rel="noopener">cBioPortal</a></li>
+        <li><a href="https://scikit-learn.org" target="_blank" rel="noopener">scikit-learn</a></li>
+        <li><a href="https://www.tooplate.com" target="_blank" rel="noopener">Tooplate templates</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 OncoSphere · HackUMass</span><span>oncosphere.health</span></div>
+  </footer>
+</main>
+<script src="data/sitedata.js"></script>
+<script src="charts.js"></script>
+<script src="site.js"></script>
+<script>
+(function () {
+  const C = OncoCharts, P = C.palette, D = window.SITE_DATA || {}, M = D.model || {}, names = D.regimenNames || {};
+  const OUT = { takeover: "resistance took over", not_by_180: "no takeover by 180", eradicated: "tumor wiped out" };
+  const GROUP = { chemo: ["chemo", P.blue], hormone: ["hormone", P.orange], adc: ["Enhertu", P.aqua], immuno: ["pembrolizumab", P.magenta], rt: ["radiation", P.yellow], combo: ["combo", P.violet] };
+  if (M.predictions) C.scatterIntervals("#ch-pred", { points: M.predictions, names, xLabel: "predicted takeover day (median)", yLabel: "real takeover day" });
+  if (M.coverage) C.line("#ch-cov", { height: 260, x: { label: "coverage the range claims", domain: [0.45, 1], ticks: [0.5, 0.6, 0.7, 0.8, 0.9, 1], fmt: (v) => Math.round(v * 100) + "%", tipFmt: (v) => "claims " + Math.round(v * 100) + "%" },
+    y: { label: "real coverage", domain: [0.2, 1.02], ticks: [0.2, 0.4, 0.6, 0.8, 1], fmt: (v) => Math.round(v * 100) + "%", tipFmt: (v) => Math.round(v * 100) + "%" },
+    series: [{ name: "after conformal calibration", color: P.blue, pts: M.coverage.levels.map((l, i) => [l, M.coverage.cqr[i]]), markers: true },
+      { name: "quantile model alone", color: P.orange, pts: M.coverage.levels.map((l, i) => [l, M.coverage.raw[i]]), markers: true }], refs: [{ diag: true }] });
+  if (M.reliability) C.line("#ch-rel", { height: 240, x: { label: "predicted chance of takeover", domain: [0, 1], fmt: (v) => Math.round(v * 100) + "%", tipFmt: (v) => "predicted " + Math.round(v * 100) + "%" },
+    y: { label: "actually took over", domain: [0, 1.02], ticks: [0, 0.25, 0.5, 0.75, 1], fmt: (v) => Math.round(v * 100) + "%", tipFmt: (v) => Math.round(v * 100) + "%" },
+    series: [{ name: "held-out runs", color: P.blue, pts: M.reliability.map((r) => [r.p, r.obs]), markers: true }], refs: [{ diag: true }] });
+  if (M.importance) C.barH("#ch-imp", { left: 210, xLabel: "% worse error when scrambled", valueFmt: (v) => "+" + C.fmt(v) + "%",
+    items: M.importance.map((i) => ({ label: i.name, value: i.value, sd: i.sd, color: i.kind === "trajectory" ? P.blue : P.orange })),
+    legend: [{ name: "tumor size, weeks 1–3", color: P.blue }, { name: "cancer / treatment / dose", color: P.orange }] });
+  if (M.confusion) { const m = M.confusion.matrix, lab = M.confusion.labels.map((l) => OUT[l]);
+    C.heatmap("#ch-conf", { rows: lab, cols: lab, left: 160, top: 110, cellW: 100, cellH: 44, ramp: ["#0e1a2b", "#3987e5"], min: 0, max: 1,
+      values: m.map((r) => { const s = r.reduce((a, b) => a + b, 0); return r.map((v) => v / s); }),
+      fmt: (v) => Math.round(v * 100) + "%", tipFmt: (v) => Math.round(v * 100) + "% of that row" }); }
+  if (M.learning) C.line("#ch-learn", { height: 240, x: { label: "training runs with a takeover", domain: [0, M.learning.points.at(-1).n + 10] },
+    y: { label: "error (days)", domain: [0, M.learning.baseline * 1.2], tipFmt: (v) => C.fmt(v, 1) + " days" },
+    series: [{ name: "surrogate model", color: P.blue, pts: M.learning.points.map((p) => [p.n, p.mae]), band: M.learning.points.map((p) => [p.n, p.mae - p.sd, p.mae + p.sd]), markers: true }],
+    refs: [{ y: M.learning.baseline, label: "no-ML guess", color: P.orange }] });
+  if (M.cumulative) { const days = M.cumulative.days;
+    C.line("#ch-cum", { height: 320, x: { label: "days since treatment started", domain: [0, 180] }, y: { label: "% of runs taken over", tipFmt: (v) => C.fmt(v) + "%" },
+      series: Object.entries(M.cumulative.groups).filter(([, g]) => g.n >= 10).map(([k, g]) => ({ name: (GROUP[k] || [k])[0] + ` (${g.n})`, color: (GROUP[k] || [0, P.ink2])[1], pts: days.map((d, i) => [d, g.pct[i]]), step: true })) }); }
+  if (M.firstWeeks) { const col = { takeover: P.orange, not_by_180: P.blue, eradicated: P.aqua };
+    C.line("#ch-weeks", { height: 320, x: { label: "day of treatment", domain: [0, 21], ticks: [0, 7, 14, 21] }, y: { label: "size vs day 0 (log)", log: true, domain: [0.05, 3], fmt: (v) => v, tipFmt: (v) => C.fmt(v, 2) + "×" },
+      series: Object.entries(M.firstWeeks).map(([k, w]) => ({ name: OUT[k] + ` (${w.n})`, color: col[k], pts: w.median.map((v, d) => [d, v]), band: w.median.map((v, d) => [d, w.p10[d], w.p90[d]]), bandOpacity: 0.1 })) }); }
+  if (M.byRegimen) { const rows = M.byRegimen.slice().sort((a, b) => (b.median ?? 999) - (a.median ?? 999));
+    C.strips("#ch-reg", { left: 300, xLabel: "takeover day", rows: rows.map((r) => ({ label: names[r.regimen] || r.regimen, days: r.days, median: r.median, color: (GROUP[r.group] || [0, P.ink2])[1],
+      note: Math.round(r.pct) + "% of " + r.n, tip: `${r.days.length} takeovers of ${r.n} runs` + (r.median != null ? `<br>median <b>day ${Math.round(r.median)}</b>` : "") })),
+      legend: Object.values(GROUP).map(([n, c]) => ({ name: n, color: c, dot: true })) }); }
+  const S = D.sensitivity, LBL = { mu: "mutation rate", costRes: "cost of resistance", cycleH: "cell cycle time", apoptosisPerDay: "background death", motilityPerDay: "motility",
+    killRate: "drug kill rate", ec50: "drug EC50", resistFold: "resistance fold", persSwitchPerDay: "persister switching", persTol: "persister tolerance", effluxFold: "efflux pump strength", alpha: "radiation α", kKill: "T cell kill rate" };
+  let scen = "chemo", met = "takeover";
+  function drawSens() {
+    if (!S || !S[scen]) return;
+    const e = S[scen][met].effects, unit = met === "takeover" ? " d" : " log2";
+    const order = Object.entries(e).sort((a, b) => Math.max(Math.abs(b[1].minus[0]), Math.abs(b[1].plus[0])) - Math.max(Math.abs(a[1].minus[0]), Math.abs(a[1].plus[0])));
+    const items = [];
+    for (const [k, v] of order) {
+      items.push({ label: (LBL[k] || k) + " −50%", value: v.minus[0], sd: v.minus[1], color: P.blue, note: "± " + C.fmt(v.minus[1], 1) + " standard error" });
+      items.push({ label: (LBL[k] || k) + " +50%", value: v.plus[0], sd: v.plus[1], color: P.orange, note: "± " + C.fmt(v.plus[1], 1) + " standard error" });
+    }
+    C.barH("#ch-sens", { left: 220, rowH: 20, items, valueFmt: (v) => (v > 0 ? "+" : "") + C.fmt(v, met === "takeover" ? 0 : 2) + unit,
+      xLabel: met === "takeover" ? `change in takeover day (baseline median day ${Math.round(S[scen][met].baseline_median)}; 180 = never)` : "change in tumor size at day 90 (log2: +1 = twice as big)",
+      legend: [{ name: "parameter −50%", color: P.blue }, { name: "parameter +50%", color: P.orange }] });
+  }
+  const seg = (id, set) => document.querySelectorAll(`#${id} button`).forEach((b) => b.onclick = () => { document.querySelectorAll(`#${id} button`).forEach((x) => x.classList.toggle("on", x === b)); set(b.dataset.v); drawSens(); });
+  seg("sensScen", (v) => (scen = v)); seg("sensMet", (v) => (met = v)); drawSens();
+  const ST = D.strategies;
+  if (ST) {
+    const selC = document.getElementById("stratCancer"), pick = document.getElementById("stratPick");
+    selC.innerHTML = Object.keys(ST).map((c) => `<option value="${c}">${c}</option>`).join("");
+    let chosen = [];
+    const COL = [P.blue, P.orange, P.aqua];
+    function buildPicks() {
+      const list = ST[selC.value];
+      chosen = [list[0].regimen, list[Math.floor(list.length / 2)].regimen, list[list.length - 1].regimen];
+      pick.innerHTML = `<select class="sel" id="stratAdd"><option value="">+ add a regimen…</option>${list.map((r) => `<option value="${r.regimen}">${r.name}</option>`).join("")}</select>`;
+      document.getElementById("stratAdd").onchange = (e) => { const v = e.target.value; if (v && !chosen.includes(v)) { chosen.push(v); if (chosen.length > 3) chosen.shift(); } e.target.value = ""; drawStrat(); };
+      drawStrat();
+    }
+    function drawStrat() {
+      const list = ST[selC.value];
+      const ser = chosen.map((id, i) => { const r = list.find((x) => x.regimen === id); return { name: (r.name.length > 38 ? r.name.slice(0, 36) + "…" : r.name) + ` · ${Math.round(r.pTakeover * 100)}% takeover, ${Math.round(r.pGone * 100)}% wiped out`, color: COL[i], pts: r.days.map((d, k) => [d, Math.max(r.med[k], 0.001)]), band: r.days.map((d, k) => [d, Math.max(r.lo[k], 0.001), Math.max(r.hi[k], 0.001)]), bandOpacity: 0.13 }; });
+      C.line("#ch-strat", { height: 380, x: { label: "days after treatment starts", domain: [0, 180] }, y: { label: "size vs day 0 (log)", log: true, domain: [0.001, 3], fmt: (v) => v, tipFmt: (v) => C.fmt(v, 3) + "×" }, series: ser, refs: [{ y: 1, label: "same size as day 0" }] });
+    }
+    selC.onchange = buildPicks; buildPicks();
+  }
+})();
+</script>
+<script type="module" src="site3d.js"></script>
+</body>
+</html>

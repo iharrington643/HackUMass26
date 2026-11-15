@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Research & Sources · OncoSphere</title>
+<meta name="description" content="The math, datasets and sources behind OncoSphere.">
+<script type="importmap">{ "imports": { "three": "./vendor/three.module.js", "three/addons/": "./vendor/" } }</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Chakra+Petch:wght@400;500;600;700&family=Exo+2:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%2300f0ff%27 stroke-width=%271.6%27%3E%3Ccircle cx=%2712%27 cy=%2712%27 r=%279%27/%3E%3Cellipse cx=%2712%27 cy=%2712%27 rx=%279%27 ry=%273.6%27/%3E%3Ccircle cx=%2715.5%27 cy=%279%27 r=%272%27 fill=%27%23f07a3d%27 stroke=%27none%27/%3E%3C/svg%3E">
+<!-- design mixes three free Tooplate templates: 2165 Neon Carbon, 2144 Parallax Depth, 2145 Eco Lume (tooplate.com) -->
+</head>
+<body data-page="research.html">
+<div class="stars"></div><div class="bg-grid"></div><div class="particles"></div><div class="mouse-ring"></div>
+
+<aside class="sidebar" aria-label="Main navigation">
+  <a href="index.html" class="brand-mark" title="OncoSphere"><svg viewBox="0 0 24 24" fill="none" stroke="#00f0ff" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="9" ry="3.6"/><ellipse cx="12" cy="12" rx="3.6" ry="9"/><circle cx="15.5" cy="9" r="1.6" fill="#f07a3d" stroke="none"/></svg></a>
+  <nav class="side-links">
+      <a href="index.html" class="side-link" title="Home"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg><span>Home</span></a>
+      <a href="simulator.html" class="side-link" title="Simulate"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="9" ry="3.5"/><path d="M12 3v18"/></svg><span>Simulate</span></a>
+      <a href="science.html" class="side-link" title="Science"><svg viewBox="0 0 24 24"><path d="M9 3h6"/><path d="M10 3v6L4 20h16l-6-11V3"/></svg><span>Science</span></a>
+      <a href="model.html" class="side-link" title="Model"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/><path d="M12 7v4M12 11l-6 5M12 11l6 5"/></svg><span>Model</span></a>
+      <a href="impact.html" class="side-link" title="Impact"><svg viewBox="0 0 24 24"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg><span>Impact</span></a>
+      <a href="research.html" class="side-link active" title="Research"><svg viewBox="0 0 24 24"><path d="M4 4h6a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H4z"/><path d="M20 4h-6a3 3 0 0 0-3 3v13a2 2 0 0 1 2-2h7z"/></svg><span>Research</span></a>
+      <a href="ledwall.html" class="side-link" title="LED Wall"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18"/><circle cx="8" cy="8" r="1"/><circle cx="12" cy="8" r="1"/><circle cx="16" cy="8" r="1"/><circle cx="8" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="16" cy="12" r="1"/><circle cx="8" cy="16" r="1"/><circle cx="12" cy="16" r="1"/><circle cx="16" cy="16" r="1"/></svg><span>LED Wall</span></a>
+  </nav>
+  <div class="side-status"><div class="lbl">SIM</div><div class="on">ONLINE</div><div class="clock">T+00:00</div></div>
+</aside>
+<button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+<nav class="mobile-nav" aria-label="Mobile navigation">
+  <a href="index.html">Home</a>
+  <a href="simulator.html">Simulate</a>
+  <a href="science.html">Science</a>
+  <a href="model.html">Model</a>
+  <a href="impact.html">Impact</a>
+  <a href="research.html">Research</a>
+  <a href="ledwall.html">LED Wall</a>
+</nav>
+
+<main class="main">
+  <header class="hud">
+    <div class="hud-title">OncoSphere</div>
+    <div class="hud-crumb"><b>&gt;</b> research <b>&gt;</b> math, data, sources</div>
+    <div class="hud-stats"><div class="hud-stat">SOURCES <b>32</b></div><div class="hud-div"></div><div class="hud-stat">GDSC LINES <b>~1,000</b></div><div class="hud-div"></div><div class="hud-stat hide-md">TCGA TUMORS <b>~5,300</b></div><div class="hud-div"></div><div class="hud-stat hide-md">GENES <b>17</b></div></div>
+  </header>
+
+  <section class="hero short">
+    <div class="layer layer-glow" data-speed="0.12"></div>
+    <div class="layer" data-speed="0.3">
+      <div class="rects bl"><div class="rect" style="width:84px;height:54px"></div><div class="rect" style="width:110px;height:66px"></div><div class="rect" style="width:92px;height:72px"></div><div class="rect" style="width:104px;height:48px"></div><div class="rect" style="width:78px;height:60px"></div><div class="rect" style="width:116px;height:78px"></div></div>
+      <div class="rects tr"><div class="rect" style="width:78px;height:68px"></div><div class="rect" style="width:98px;height:52px"></div><div class="rect" style="width:72px;height:62px"></div><div class="rect" style="width:88px;height:48px"></div></div>
+    </div>
+    <div class="layer" data-speed="0.5"><div class="orb" style="top:18%"></div><div class="orb two"></div></div>
+    <div class="hero-copy reveal">
+      <div class="tag">// research</div>
+      <h1 class="mega md">Math, data<br>&amp; sources</h1>
+      <p class="lede">The derivations behind each model, the datasets we pulled and mapped, the numbers Rayne researched, and every paper and label we cite.</p>
+      <div class="cta-row"><a href="#math" class="btn btn-primary">The math</a><a href="#cites" class="btn btn-ghost">All sources</a></div>
+    </div>
+    <div class="hero-visual">
+      <div class="orbit-ring"></div><div class="orbit-ring r2"></div>
+      <canvas data-scene="helix" aria-label="3D animation"></canvas>
+
+    </div>
+    <a href="#start" class="next-btn" aria-label="Scroll down"><div class="pyramid"><div class="pyr-face"></div><div class="pyr-face"></div><div class="pyr-face"></div><div class="pyr-face"></div></div></a>
+  </section>
+  <div id="start"></div>
+  <section class="section" id="math">
+    <div class="sec-tag">// 01 · derivations</div>
+    <h2 class="sec-title reveal">The math we used</h2>
+    <div class="gap-grid g2">
+      <div class="card tech reveal"><div class="card-id">oxygen &amp; drugs</div><h3>Steady-state reaction-diffusion</h3>
+        <p>Diffusion in, first-order consumption by living cells (u = 1 where a cell is alive). Oxygen changes in seconds and cells in hours, so we solve for the steady state each step with red-black SOR (ω = 1.7).</p>
+        <div class="eq">0 = D∇²C − k·u·C &nbsp;⟹&nbsp; L = √(D/k)</div>
+        <p>In a sphere of radius R with C = 1 at the edge: C(r) = R·sinh(r/L) / (r·sinh(R/L)). Oxygen: L ≈ 3 cells (~60 µm). <span class="label-chip chip-sourced">SOURCED</span></p></div>
+      <div class="card tech reveal"><div class="card-id">Rayne's derivation</div><h3>One capillary (Krogh cylinder)</h3>
+        <p>Drug leaving a single capillary into the tissue around it, in cylindrical coordinates:</p>
+        <div class="eq">∂C/∂t = D_eff · (1/r)·∂/∂r(r·∂C/∂r) − k·C</div>
+        <p>Same length scale, converted to cells: L = √(D_eff/k) / 20 µm. We checked the quasi-steady assumption for each drug (carboplatin is the one that spreads fast enough to matter). <span class="label-chip chip-sourced">RAYNE</span></p></div>
+      <div class="card tech reveal"><div class="card-id">drug killing</div><h3>Hill dose-response with resistance</h3>
+        <div class="eq">kill = k_max · Cⁿ / (Cⁿ + (EC50·F)ⁿ)</div>
+        <p>F = resistance fold for resistant cells (from GDSC: exp(q90 − median of ln IC50)); drug pumps divide C by 6; resting cells get a lower k_max. Rates convert to per-step chances with p = 1 − e<sup>−rate·dt</sup>. <span class="label-chip chip-proxy">PROXY</span></p></div>
+      <div class="card tech reveal"><div class="card-id">radiation</div><h3>Linear-quadratic + oxygen effect</h3>
+        <div class="eq">S = exp(−α·f·d − β·(f·d)²), &nbsp; f = (K + 3·O₂) / (3·(K + O₂))</div>
+        <p>α = 0.3 /Gy, β = 0.03 /Gy², maximum oxygen enhancement ratio 3, K = 3 mmHg (Alper &amp; Howard-Flanders form). f = 1 with plenty of oxygen, 1/3 with none. Lethally hit cells are "doomed" and die over ~30 h. <span class="label-chip chip-sourced">SOURCED</span></p></div>
+      <div class="card tech reveal"><div class="card-id">persisters &amp; immunity</div><h3>Switching and activation</h3>
+        <p>Cells under drug switch to a tolerant state at 0.024/day and back after ~96 h. T cells diffuse from the edge (L = 5 cells); pembrolizumab has a 26-day half-life and boosts activation; visibility grows with mutation count. <span class="label-chip chip-estimate">ESTIMATE</span> <span class="label-chip chip-sourced">RAYNE</span></p></div>
+      <div class="card tech reveal"><div class="card-id">surrogate</div><h3>Conformalized quantile regression</h3>
+        <p>Fit quantile models q̂<sub>lo</sub>, q̂<sub>hi</sub> on log takeover day, then on a separate calibration set compute scores and widen every interval by their quantile:</p>
+        <div class="eq">E = max(q̂_lo − y, y − q̂_hi) &nbsp;→&nbsp; [q̂_lo − Q, q̂_hi + Q]</div>
+        <p>This guarantees coverage on new data from the same distribution (Romano et al., 2019).</p></div>
+    </div>
+  </section>
+
+  <section class="section band" style="max-width:none"><div style="max-width:1400px;margin:0 auto">
+    <div class="sec-tag">// 02 · transport data</div>
+    <h2 class="sec-title reveal">Diffusion and uptake per drug</h2>
+    <p class="sec-lede reveal">Rayne collected effective diffusion coefficients and uptake rates. Where a measured penetration depth existed, we fitted k so the model reproduces it.</p>
+    <div class="table-wrap reveal"><table class="t" id="penTable"><thead><tr><th>Drug</th><th>D_eff (µm²/s)</th><th>k (1/s)</th><th>L (cells)</th><th>L (µm)</th><th>Basis</th></tr></thead><tbody></tbody></table></div>
+  </div></section>
+
+  <section class="section">
+    <div class="sec-tag">// 03 · GDSC</div>
+    <h2 class="sec-title reveal">Drug potency from ~1,000 cell lines</h2>
+    <p class="sec-lede reveal">From the GDSC2 screen we took each cancer's median IC50 relative to a typical one of our 10 cancers (softened by a square root, shrunk toward 1 with few cell lines) as a potency multiplier. Close relatives stand in for drugs GDSC didn't test.</p>
+    <div class="gap-grid g2">
+      <div class="card chart-card tech reveal "><h3>Potency multiplier per cancer</h3><div class="sub">1.0 = typical. Higher = the drug works better on that cancer's cell lines.</div><div id="ch-gdsc"></div></div>
+      <div class="card chart-card tech reveal "><h3>Resistance fold</h3><div class="sub">How much more drug the most resistant 10% of cell lines need vs the median.</div><div id="ch-fold"></div></div>
+    </div>
+  </section>
+
+  <section class="section band" style="max-width:none"><div style="max-width:1400px;margin:0 auto">
+    <div class="sec-tag">// 04 · cBioPortal</div>
+    <h2 class="sec-title reveal">What tumors start with</h2>
+    <p class="sec-lede reveal">Share of TCGA tumors that already carry each trait at diagnosis, from 17 genes in 10 PanCancer Atlas studies. Each virtual patient rolls these once, so every cell starts with them.</p>
+    <div class="card chart-card tech reveal "><h3>Starting trait frequency</h3><div class="sub">PRO: KRAS/NRAS/BRAF/PIK3CA hotspots or MYC amp · HYP: TP53 · MUT: POLE / mismatch repair · IMM: B2M/JAK1/JAK2 loss · EFX: ABCB1 amp · RTA: AR/ESR1</div><div id="ch-cbio"></div></div>
+  </div></section>
+
+  <section class="section">
+    <div class="sec-tag">// 05 · side-effect timing</div>
+    <h2 class="sec-title reveal">When side effects show up</h2>
+    <p class="sec-lede reveal">Onset, peak and end of each side effect after a dose, from drug labels where possible. Percentages come from Rayne's side-effect data.</p>
+    <div class="card chart-card tech reveal "><h3>Side-effect windows (days after a dose)</h3><div class="sub">Bar = onset to end, bright tick = peak. Course effects continue while treatment continues.</div><div class="ctrl-row">drug: <select class="sel" id="ganttDrug"></select></div><div id="ch-gantt"></div></div>
+  </section>
+
+  <section class="section band" id="cites" style="max-width:none"><div style="max-width:1400px;margin:0 auto">
+    <div class="sec-tag">// 06 · sources</div>
+    <h2 class="sec-title reveal">Papers, data &amp; labels</h2>
+    <div class="filters reveal">
+      <button class="filter-chip on" data-k="all">All</button>
+      <button class="filter-chip" data-k="data">Data sets</button><button class="filter-chip" data-k="transport">Drug & oxygen transport</button><button class="filter-chip" data-k="biology">Tumor biology</button><button class="filter-chip" data-k="radiation">Radiobiology</button><button class="filter-chip" data-k="labels">Drug labels & side effects</button><button class="filter-chip" data-k="ml">Statistics & ML</button><button class="filter-chip" data-k="software">Software & design</button>
+      <input class="search" id="citeSearch" placeholder="search sources…" aria-label="Search sources">
+    </div>
+    <div class="cites" id="citeList">
+<div class="cite glass tilt reveal" data-kind="data"><div class="kind">Data sets</div><h4>Iorio F, et al. (2016). A landscape of pharmacogenomic interactions in cancer.</h4><div class="src">Cell 166:740</div><div class="used">GDSC drug screen across ~1,000 cell lines: our per-cancer drug potency and resistance fold. <a href="https://doi.org/10.1016/j.cell.2016.06.017" target="_blank" rel="noopener">link ↗</a></div></div>
+<div class="cite glass tilt reveal" data-kind="data"><div class="kind">Data sets</div><h4>Yang W, et al. (2013). Genomics of Drug Sensitivity in Cancer (GDSC): a resource for therapeutic biomarker discovery in cancer cells.</h4><div class="src">Nucleic Acids Research 41:D955</div><div class="used">The GDSC database; GDSC2 fitted dose-response release (Oct 2023). <a href="https://www.cancerrxgene.org" target="_blank" rel="noopener">link ↗</a></div></div>
+<div class="cite glass tilt reveal" data-kind="data"><div class="kind">Data sets</div><h4>Cerami E, et al. (2012). The cBio cancer genomics portal: an open platform for exploring multidimensional cancer genomics data.</h4><div class="src">Cancer Discovery 2:401</div><div class="used">cBioPortal API: mutation and copy-number data for starting trait rates. <a href="https://www.cbioportal.org" target="_blank" rel="noopener">link ↗</a></div></div>
+<div class="cite glass tilt reveal" data-kind="data"><div class="kind">Data sets</div><h4>Gao J, et al. (2013). Integrative analysis of complex cancer genomics and clinical profiles using the cBioPortal.</h4><div class="src">Science Signaling 6:pl1</div><div class="used">cBioPortal methods. <a href="https://www.cbioportal.org" target="_blank" rel="noopener">link ↗</a></div></div>
+<div class="cite glass tilt reveal" data-kind="data"><div class="kind">Data sets</div><h4>Hoadley KA, et al. (2018). Cell-of-origin patterns dominate the molecular classification of 10,000 tumors from 33 types of cancer.</h4><div class="src">Cell 173:291</div><div class="used">TCGA PanCancer Atlas: the 10 studies (~5,300 tumors) behind our starting mutations. <a href="https://doi.org/10.1016/j.cell.2018.03.022" target="_blank" rel="noopener">link ↗</a></div></div>
+<div class="cite glass tilt reveal" data-kind="data"><div class="kind">Data sets</div><h4>American Cancer Society. Cancer Facts & Figures.</h4><div class="src">ACS</div><div class="used">Yearly US new cases and deaths per cancer (Rayne's research sheet). <a href="https://www.cancer.org/research/cancer-facts-statistics.html" target="_blank" rel="noopener">link ↗</a></div></div>
+<div class="cite glass tilt reveal" data-kind="transport"><div class="kind">Drug & oxygen transport</div><h4>Primeau AJ, et al. (2005). The distribution of the anticancer drug doxorubicin in relation to blood vessels in solid tumors.</h4><div class="src">Clinical Cancer Research 11:8782</div><div class="used">Doxorubicin falls to half within 40–50 µm of vessels: our doxorubicin penetration fit.</div></div>
+<div class="cite glass tilt reveal" data-kind="transport"><div class="kind">Drug & oxygen transport</div><h4>Kyle AH, et al. (2007). Limited tissue penetration of taxanes: a mechanism for resistance in solid tumors.</h4><div class="src">Clinical Cancer Research 13:2804</div><div class="used">Little paclitaxel beyond ~100 µm from vessels: our paclitaxel penetration fit.</div></div>
+<div class="cite glass tilt reveal" data-kind="transport"><div class="kind">Drug & oxygen transport</div><h4>Morrison PF, Dedrick RL (1986). Transport of cisplatin in rat brain following microinfusion.</h4><div class="src">Journal of Pharmaceutical Sciences 75:120</div><div class="used">Cisplatin tissue binding rate, used as a proxy for carboplatin.</div></div>
+<div class="cite glass tilt reveal" data-kind="transport"><div class="kind">Drug & oxygen transport</div><h4>Thurber GM, Schmidt MM, Wittrup KD (2008). Antibody tumor penetration: transport opposed by systemic and antigen-mediated clearance.</h4><div class="src">Advanced Drug Delivery Reviews 60:1421</div><div class="used">Antibodies reach only a few cell layers: Enhertu's antibody penetration.</div></div>
+<div class="cite glass tilt reveal" data-kind="transport"><div class="kind">Drug & oxygen transport</div><h4>Krogh A (1919). The number and distribution of capillaries in muscles with calculations of the oxygen pressure head necessary for supplying the tissue.</h4><div class="src">Journal of Physiology 52:409</div><div class="used">The Krogh cylinder behind Rayne's single-capillary drug equation.</div></div>
+<div class="cite glass tilt reveal" data-kind="transport"><div class="kind">Drug & oxygen transport</div><h4>Thomlinson RH, Gray LH (1955). The histological structure of some human lung cancers and the possible implications for radiotherapy.</h4><div class="src">British Journal of Cancer 9:539</div><div class="used">Background: oxygen only reaches ~150 µm from vessels, leaving a necrotic core.</div></div>
+<div class="cite glass tilt reveal" data-kind="transport"><div class="kind">Drug & oxygen transport</div><h4>El-Kareh & Secomb; Gasselhuber et al.; Khera et al.; Korbelik & Krosl; Zhang et al. (Metallomics)</h4><div class="src">various</div><div class="used">Doxorubicin uptake kinetics and D_eff, ADC payload reach, Photofrin localization, cisplatin spheroid penetration (see SOURCES.md).</div></div>
+<div class="cite glass tilt reveal" data-kind="biology"><div class="kind">Tumor biology</div><h4>Sharma SV, et al. (2010). A chromatin-mediated reversible drug-tolerant state in cancer cell subpopulations.</h4><div class="src">Cell 141:69</div><div class="used">Drug-tolerant persister cells: our persister switching model. <a href="https://doi.org/10.1016/j.cell.2010.02.027" target="_blank" rel="noopener">link ↗</a></div></div>
+<div class="cite glass tilt reveal" data-kind="biology"><div class="kind">Tumor biology</div><h4>Graeber TG, et al. (1996). Hypoxia-mediated selection of cells with diminished apoptotic potential in solid tumours.</h4><div class="src">Nature 379:88</div><div class="used">Low oxygen selects for p53-mutant cells: TP53 maps to the HYP trait.</div></div>
+<div class="cite glass tilt reveal" data-kind="biology"><div class="kind">Tumor biology</div><h4>Samstein RM, et al. (2019). Tumor mutational load predicts survival after immunotherapy across multiple cancer types.</h4><div class="src">Nature Genetics 51:202</div><div class="used">More mutations, better checkpoint response: T cell visibility scales with mutation count.</div></div>
+<div class="cite glass tilt reveal" data-kind="biology"><div class="kind">Tumor biology</div><h4>Zhang J, Cunningham JJ, Brown JS, Gatenby RA (2017). Integrating evolutionary dynamics into treatment of metastatic castrate-resistant prostate cancer.</h4><div class="src">Nature Communications 8:1816</div><div class="used">Adaptive therapy in patients: context for our competitive-release finding.</div></div>
+<div class="cite glass tilt reveal" data-kind="biology"><div class="kind">Tumor biology</div><h4>Gatenby RA, Silva AS, Gillies RJ, Frieden BR (2009). Adaptive therapy.</h4><div class="src">Cancer Research 69:4894</div><div class="used">The idea of dosing to control rather than eradicate.</div></div>
+<div class="cite glass tilt reveal" data-kind="radiation"><div class="kind">Radiobiology</div><h4>Fowler JF (1989). The linear-quadratic formula and progress in fractionated radiotherapy.</h4><div class="src">British Journal of Radiology 62:679</div><div class="used">The LQ model of cell survival after radiation.</div></div>
+<div class="cite glass tilt reveal" data-kind="radiation"><div class="kind">Radiobiology</div><h4>Alper T, Howard-Flanders P (1956). Role of oxygen in modifying the radiosensitivity of E. coli B.</h4><div class="src">Nature 178:978</div><div class="used">The oxygen enhancement ratio: hypoxic cells ~3× harder to kill.</div></div>
+<div class="cite glass tilt reveal" data-kind="labels"><div class="kind">Drug labels & side effects</div><h4>Carboplatin prescribing information (Pfizer / DailyMed).</h4><div class="src">Drug label</div><div class="used">Blood count low point ~day 21, recovery by day 28; side-effect timing. <a href="https://www.pfizermedical.com/carboplatin" target="_blank" rel="noopener">link ↗</a></div></div>
+<div class="cite glass tilt reveal" data-kind="labels"><div class="kind">Drug labels & side effects</div><h4>Doxorubicin prescribing information (Pfizer).</h4><div class="src">Drug label</div><div class="used">White-cell low point 10–14 days, recovery by day 21. <a href="https://www.pfizermedical.com/doxorubicin/warnings" target="_blank" rel="noopener">link ↗</a></div></div>
+<div class="cite glass tilt reveal" data-kind="labels"><div class="kind">Drug labels & side effects</div><h4>Paclitaxel prescribing information (Pfizer).</h4><div class="src">Drug label</div><div class="used">Neutrophil low point ~day 11; hair loss from weeks 1–3. <a href="https://www.pfizermedicalinformation.com/paclitaxel/warnings" target="_blank" rel="noopener">link ↗</a></div></div>
+<div class="cite glass tilt reveal" data-kind="labels"><div class="kind">Drug labels & side effects</div><h4>Photofrin (porfimer sodium) prescribing information.</h4><div class="src">DailyMed</div><div class="used">Laser 40–50 h after injection; photosensitive for at least 30 days. <a href="https://dailymed.nlm.nih.gov/dailymed/drugInfo.cfm?setid=5c4841b4-fbc0-4163-8ee1-cb28629cbfbf" target="_blank" rel="noopener">link ↗</a></div></div>
+<div class="cite glass tilt reveal" data-kind="labels"><div class="kind">Drug labels & side effects</div><h4>Pembrolizumab (Keytruda) label and pooled safety analyses.</h4><div class="src">Drug label / PMC11227881</div><div class="used">Immune side effects: median onset ~85 days. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11227881" target="_blank" rel="noopener">link ↗</a></div></div>
+<div class="cite glass tilt reveal" data-kind="labels"><div class="kind">Drug labels & side effects</div><h4>Cortés J, et al. (2022). Trastuzumab deruxtecan versus trastuzumab emtansine for breast cancer (DESTINY-Breast03).</h4><div class="src">New England Journal of Medicine 386:1143</div><div class="used">Interstitial lung disease in ~10.5%, median onset ~5.5 months.</div></div>
+<div class="cite glass tilt reveal" data-kind="labels"><div class="kind">Drug labels & side effects</div><h4>Goserelin (Zoladex) prescribing information.</h4><div class="src">Drug label</div><div class="used">Castrate hormone levels ~21 days after the first implant.</div></div>
+<div class="cite glass tilt reveal" data-kind="labels"><div class="kind">Drug labels & side effects</div><h4>Radiation side effects: RTAnswers (ASTRO).</h4><div class="src">Patient guide</div><div class="used">Fatigue and skin effects build from weeks 2–3 and fade weeks after. <a href="https://www.rtanswers.org/cancer-types/breast-cancer/breast-cancer/first-on-treatment-visit/side-effects" target="_blank" rel="noopener">link ↗</a></div></div>
+<div class="cite glass tilt reveal" data-kind="ml"><div class="kind">Statistics & ML</div><h4>Romano Y, Patterson E, Candès E (2019). Conformalized quantile regression.</h4><div class="src">NeurIPS 32</div><div class="used">How we calibrated the takeover-day ranges. <a href="https://arxiv.org/abs/1905.03222" target="_blank" rel="noopener">link ↗</a></div></div>
+<div class="cite glass tilt reveal" data-kind="ml"><div class="kind">Statistics & ML</div><h4>Pedregosa F, et al. (2011). Scikit-learn: machine learning in Python.</h4><div class="src">Journal of Machine Learning Research 12:2825</div><div class="used">Gradient-boosted trees, quantile loss, permutation importance. <a href="https://scikit-learn.org" target="_blank" rel="noopener">link ↗</a></div></div>
+<div class="cite glass tilt reveal" data-kind="software"><div class="kind">Software & design</div><h4>Three.js, MFRC522 Arduino library, esbuild.</h4><div class="src">Open source</div><div class="used">3D rendering, RFID reading, single-file build. <a href="https://threejs.org" target="_blank" rel="noopener">link ↗</a></div></div>
+<div class="cite glass tilt reveal" data-kind="software"><div class="kind">Software & design</div><h4>Tooplate free HTML templates: 2165 Neon Carbon, 2144 Parallax Depth, 2145 Eco Lume.</h4><div class="src">tooplate.com</div><div class="used">The visual style of this website. <a href="https://www.tooplate.com" target="_blank" rel="noopener">link ↗</a></div></div>
+    </div>
+    <p class="muted small" style="margin-top:20px">The full list with notes is in SOURCES.md in the repository.</p>
+  </div></section>
+
+  <footer class="footer">
+    <div class="footer-grid">
+      <div>
+        <div class="brand">ONCOSPHERE</div>
+        <p class="muted small" style="max-width:420px;margin-top:10px">A 3D tumor evolution and treatment-resistance simulator with a machine-learning forecast and a color-coded pill-bottle console. Built at HackUMass by Hope, Isabella, Rayne and Katla. Educational project, not medical advice.</p>
+      </div>
+      <div><h4>Pages</h4><ul><li><a href="index.html">Home</a></li><li><a href="simulator.html">Simulate</a></li><li><a href="science.html">Science</a></li><li><a href="model.html">Model</a></li><li><a href="impact.html">Impact</a></li><li><a href="research.html">Research</a></li><li><a href="ledwall.html">LED Wall</a></li></ul></div>
+      <div><h4>Built with</h4><ul>
+        <li><a href="https://threejs.org" target="_blank" rel="noopener">Three.js</a></li>
+        <li><a href="https://www.cancerrxgene.org" target="_blank" rel="noopener">GDSC</a> + <a href="https://www.cbioportal.org" target="_blank" rel="noopener">cBioPortal</a></li>
+        <li><a href="https://scikit-learn.org" target="_blank" rel="noopener">scikit-learn</a></li>
+        <li><a href="https://www.tooplate.com" target="_blank" rel="noopener">Tooplate templates</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 OncoSphere · HackUMass</span><span>oncosphere.health</span></div>
+  </footer>
+</main>
+<script src="data/sitedata.js"></script>
+<script src="charts.js"></script>
+<script src="site.js"></script>
+<script>
+(function () {
+  const C = OncoCharts, P = C.palette, D = window.SITE_DATA || {};
+  const BASIS = { carboplatin: "cisplatin proxy (Morrison & Dedrick 1986)", doxorubicin: "k fitted to Primeau 2005", paclitaxel: "k fitted to Kyle 2007", trastuzumabDeruxtecan: "k fitted to Thurber 2008", goserelin: "estimate", porfimer: "estimate" };
+  const tb = document.querySelector("#penTable tbody");
+  if (D.penetration) tb.innerHTML = D.penetration.map((d) => `<tr><td>${d.name}</td><td>${d.Deff ?? "–"}</td><td>${d.k ?? "–"}</td><td>${C.fmt(d.L, 1)}</td><td>${d.um}</td><td>${BASIS[d.id] || ""}</td></tr>`).join("");
+  const CN = Object.fromEntries((D.cancers || []).map((c) => [c.id, c.name.replace(/ cancer| lymphoma/i, "")]));
+  const DN = { carboplatin: "carboplatin (cisplatin)", doxorubicin: "doxorubicin (epirubicin)", paclitaxel: "paclitaxel", trastuzumabDeruxtecan: "Enhertu payload (SN-38)" };
+  if (D.gdsc) {
+    const drugs = Object.keys(D.gdsc.killScale), cancers = Object.keys(D.gdsc.killScale[drugs[0]]);
+    C.heatmap("#ch-gdsc", { rows: cancers.map((c) => CN[c] || c), cols: drugs.map((d) => DN[d]), left: 120, top: 110, cellW: 92, cellH: 30,
+      values: cancers.map((c) => drugs.map((d) => D.gdsc.killScale[d][c])), ramp: ["#d95926", "#3987e5"], mid: "#20262f", min: 0.4, max: 2.5,
+      fmt: (v) => v.toFixed(2), tipFmt: (v) => v.toFixed(2) + "× typical potency" });
+    C.barH("#ch-fold", { left: 190, items: drugs.map((d) => ({ label: DN[d], value: D.gdsc.resistFold[d], color: P.orange, note: "q90 / median IC50 across all GDSC cell lines" })), valueFmt: (v) => C.fmt(v, 1) + "×", xLabel: "resistance fold (×)" });
+  }
+  if (D.startingFreq) {
+    const T = ["PRO", "HYP", "MUT", "IMM", "EFX", "RTA"], rows = Object.keys(D.startingFreq);
+    C.heatmap("#ch-cbio", { rows: rows.map((c) => CN[c] || c), cols: ["PRO growth", "HYP low-O₂", "MUT mutator", "IMM immune", "EFX pump", "RTA target"], left: 130, top: 90, cellW: 96, cellH: 32,
+      values: rows.map((c) => T.map((t) => D.startingFreq[c][t])), ramp: ["#0e1a2b", "#00c8e0"], min: 0, max: 0.9,
+      fmt: (v) => Math.round(v * 100) + "%", tipFmt: (v) => Math.round(v * 100) + "% of tumors" });
+  }
+  const TL = D.timelines || {}, sel = document.getElementById("ganttDrug");
+  const NM = { carboplatin: "Carboplatin", doxorubicin: "Doxorubicin", paclitaxel: "Paclitaxel", goserelin: "Goserelin", pembrolizumab: "Pembrolizumab", porfimer: "Photofrin", trastuzumabDeruxtecan: "Enhertu", radiation: "Radiation" };
+  sel.innerHTML = Object.keys(TL).map((k) => `<option value="${k}">${NM[k] || k}</option>`).join("");
+  function gantt() {
+    const rows = TL[sel.value] || [];
+    const host = document.getElementById("ch-gantt"); host.innerHTML = ""; host.classList.add("chart");
+    const end = (r) => (r.shape === "dose" ? r.end : r.peak + r.afterEnd);
+    const maxD = Math.min(400, Math.max(30, ...rows.map(end)));
+    const Wd = Math.max(520, host.clientWidth || 760), L = 240, rowH = 30, H = rows.length * rowH + 50, iw = Wd - L - 30;
+    const x = (d) => L + (Math.min(d, maxD) / maxD) * iw;
+    const NS = "http://www.w3.org/2000/svg", svg = document.createElementNS(NS, "svg");
+    svg.setAttribute("viewBox", `0 0 ${Wd} ${H}`); host.appendChild(svg);
+    const tip = document.createElement("div"); tip.className = "chart-tip"; host.appendChild(tip);
+    const mk = (t, a) => { const n = document.createElementNS(NS, t); for (const k in a) n.setAttribute(k, a[k]); svg.appendChild(n); return n; };
+    const step = maxD > 200 ? 50 : maxD > 80 ? 20 : 7;
+    for (let d = 0; d <= maxD; d += step) { mk("line", { x1: x(d), x2: x(d), y1: 0, y2: H - 36, stroke: "rgba(255,255,255,0.06)" }); const t = mk("text", { x: x(d), y: H - 20, "text-anchor": "middle", class: "lbl" }); t.textContent = d; }
+    const lb = mk("text", { x: L + iw / 2, y: H - 4, "text-anchor": "middle", class: "title-lbl" }); lb.textContent = "days after a dose (course effects: after the first dose)";
+    const TAG = { SOURCED: P.aqua, ESTIMATE: P.yellow, DUMMY: "#e66767" };
+    rows.forEach((r, i) => {
+      const y = i * rowH + 6, e = end(r), col = r.blood ? P.blue : r.shape === "course" ? P.violet : P.orange;
+      const t = mk("text", { x: L - 10, y: y + 11, "text-anchor": "end", style: "fill:#a3aab5;font-size:11px;font-family:var(--font-body)" }); t.textContent = r.effect;
+      const bar = mk("rect", { x: x(r.start), y, width: 0, height: 14, rx: 7, fill: col, opacity: 0.55 });
+      requestAnimationFrame(() => { bar.style.transition = `width .9s cubic-bezier(.22,1,.36,1) ${i * 50}ms`; bar.setAttribute("width", Math.max(3, x(e) - x(r.start))); });
+      mk("rect", { x: x(r.peak) - 2, y: y - 3, width: 4, height: 20, fill: "#fff", rx: 2 });
+      mk("circle", { cx: x(e) + 10, cy: y + 7, r: 4, fill: TAG[r.tag] || P.ink3 });
+      const hit = mk("rect", { x: L, y: y - 4, width: iw, height: rowH - 4, fill: "transparent" });
+      hit.addEventListener("mouseenter", () => { const k = svg.getBoundingClientRect().width / Wd; tip.innerHTML = `${r.effect}<br>starts day <b>${r.start}</b>, peaks day <b>${r.peak}</b>, ${r.shape === "dose" ? "gone by day <b>" + r.end + "</b>" : "fades " + r.afterEnd + " days after the last dose"}<br>${r.tag}${r.blood ? " · white-cell low point" : ""}`; tip.style.left = x(r.peak) * k + "px"; tip.style.top = y * k + "px"; tip.classList.add("on"); });
+      hit.addEventListener("mouseleave", () => tip.classList.remove("on"));
+    });
+    C.legend(host, [{ name: "after each dose", color: P.orange }, { name: "white-cell dip", color: P.blue }, { name: "builds over the course", color: P.violet }, { name: "sourced", color: P.aqua, dot: true }, { name: "estimate", color: P.yellow, dot: true }, { name: "placeholder", color: "#e66767", dot: true }]);
+  }
+  sel.onchange = gantt; gantt();
+  let kind = "all", q = "";
+  const apply = () => document.querySelectorAll("#citeList .cite").forEach((c) => { c.style.display = (kind === "all" || c.dataset.kind === kind) && c.textContent.toLowerCase().includes(q) ? "" : "none"; });
+  document.querySelectorAll(".filter-chip").forEach((b) => b.onclick = () => { document.querySelectorAll(".filter-chip").forEach((x) => x.classList.toggle("on", x === b)); kind = b.dataset.k; apply(); });
+  document.getElementById("citeSearch").oninput = (e) => { q = e.target.value.toLowerCase(); apply(); };
+})();
+</script>
+<script type="module" src="site3d.js"></script>
+</body>
+</html>
