@@ -1,0 +1,87 @@
+{
+ "cancers": [
+  "bladder",
+  "breast",
+  "colorectal",
+  "uterine",
+  "prostate",
+  "nonHodgkin",
+  "hodgkin",
+  "lung",
+  "thyroid",
+  "melanoma"
+ ],
+ "regimens": [
+  "carboplatinQ21",
+  "carboPaclitaxelQ21",
+  "doxQ21",
+  "doxDoseDense",
+  "weeklyPaclitaxel",
+  "goserelinMonthly",
+  "goserelinPlusRT",
+  "enhertuQ21",
+  "pembroQ3W",
+  "pembroQ6W",
+  "carboPaclitaxelPembro",
+  "photofrinPDT",
+  "radiationConventional",
+  "radiationHypo",
+  "radiation40Gy"
+ ],
+ "groups": [
+  "chemo",
+  "hormone",
+  "adc",
+  "immuno",
+  "rt"
+ ],
+ "regimenGroups": {
+  "carboplatinQ21": [
+   "chemo"
+  ],
+  "carboPaclitaxelQ21": [
+   "chemo"
+  ],
+  "doxQ21": [
+   "chemo"
+  ],
+  "doxDoseDense": [
+   "chemo"
+  ],
+  "weeklyPaclitaxel": [
+   "chemo"
+  ],
+  "goserelinMonthly": [
+   "hormone"
+  ],
+  "goserelinPlusRT": [
+   "hormone",
+   "rt"
+  ],
+  "enhertuQ21": [
+   "adc"
+  ],
+  "pembroQ3W": [
+   "immuno"
+  ],
+  "pembroQ6W": [
+   "immuno"
+  ],
+  "carboPaclitaxelPembro": [
+   "chemo",
+   "immuno"
+  ],
+  "photofrinPDT": [
+   "chemo"
+  ],
+  "radiationConventional": [
+   "rt"
+  ],
+  "radiationHypo": [
+   "rt"
+  ],
+  "radiation40Gy": [
+   "rt"
+  ]
+ }
+}
